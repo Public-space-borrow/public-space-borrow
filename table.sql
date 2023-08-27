@@ -2,6 +2,7 @@ CREATE TABLE Space(
     ID int NOT NULL AUTO_INCREMENT,
     Space_name varchar(255) NOT NULL DEFAULT 'None',
     region varchar(255) NOT NULL DEFAULT '翠亨',
+    link varchar(255) NULL DEFAULT NULL,
     PRIMARY KEY (ID)
 );
 
