@@ -6,21 +6,14 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>宿舍公共空間借用系統</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/apply.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script src="js/apply.js"></script>
-        <script src="plugin/jspanel-4.16.1/dist/jspanel.min.js"></script>
-        <link href="plugin/jspanel-4.16.1/dist/jspanel.min.css" rel="stylesheet">
-        <script src="plugin/jspanel-4.16.1/dist/extensions/modal/jspanel.modal.min.js"></script>
+        
     </head>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
@@ -32,7 +25,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
-                            <li class="nav-item"><a class="nav-link" href="notice.html">借用須知</a></li>
+                            <li class="nav-item"><a class="nav-link" href="faq.html">借用須知</a></li>
                         </ul>
                     </div>
                 </div>
@@ -40,8 +33,9 @@
             <div class="text-center mt-5 mb-4">
                 <p class="lead fw-normal text-muted mb-0">借用空間：</p>
                 <select class="wide" id="dropdown">
-                    <option value="1-1" <?php if ($_GET['option'] == '1-1') echo 'selected'; ?>>雨樹L棟會議室</option>
-                    <option value="1-2" <?php if ($_GET['option'] == '1-2') echo 'selected'; ?>>雨樹廣場</option>
+                    <option value="1-1">雨樹L棟會議室</option>
+                    <option value="1-2">雨樹廣場</option>
+                    <option value="1-3">翠亨L棟自煮空間</option>
                 </select>
             </div>
             
@@ -64,6 +58,7 @@
                         <!--a row of registration-->
                         <tr>
                             <td class="timeText">
+                                <div class="timeSlot"></div>
                             </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                             <td class="registButt position-relative">
                                 <p class="date">一</p>
@@ -107,13 +102,25 @@
                                 </a>
                             </td>
                             <td class="timeText">
+                                <div class="timeSlot"></div>
                             </td>
                         </tr>
                         <!--a row of registration-->
                     </tbody>
                 </table>
-            </div>            
+            </div>
+            <div class="form-popup" id="myForm">
+                <form class="form-container">
+                    <h5>申請人資料</h5>
+                    <form action="" method="post">
+                        <input type="text" id="name" name="name" placeholder="姓名" required>
+                        <input type="room" id="room" name="room" placeholder="房號" required>
+                        <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
+                        <input type="submit" value="提交申請" class="submit">
+                </form>
+            </div>
             
+
         </main>
         <!-- Footer-->
         <footer class="bg-516464 py-4 mt-auto">
@@ -124,8 +131,10 @@
                 </div>
             </div>
         </footer>
-        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/apply.js"></script>
     </body>
 </html>
-
-  
