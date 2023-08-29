@@ -1,3 +1,20 @@
+<?php
+    $servername = "114.35.222.181";
+    $username = "dormcenter";
+    $password = "59365937";
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=dorm", $username, $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      } catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $sql = "SELECT region from Space where ID = ".$_GET['space_id'];
+    $stmt = $conn->prepare($sql);
+    $stmt->excecute();
+    $row = $stmt->fetch();
+    $region = $row['region'];
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,12 +50,24 @@
             <div class="text-center mt-5 mb-4">
                 <p class="lead fw-normal text-muted mb-0">借用空間：</p>
                 <select class="wide" id="dropdown">
-                    <option value="1-1">雨樹L棟會議室</option>
-                    <option value="1-2">雨樹廣場</option>
-                    <option value="1-3">翠亨L棟自煮空間</option>
+                <?php
+                    foreach($conn->query("SELECT * FROM Space where region = ".$region) as $row) {
+                        $space_id = $row['ID'];
+                        $space_name = $row['Space_name'];
+                        if($_GET['space_id'] == $space_id) {
+                ?>
+                            <option value=<?=$space_id?> selected="selected"><?=$space_name?></option>
+                <?php
+                        }
+                        else {
+                ?>
+                            <option value=<?=$space_id?>><?=$space_name?></option>
+                <?php
+                        }
+                    }
+                ?>
                 </select>
             </div>
-            
             <div class="container px-4 py-5 bg-f9f9ff">
                 <table class="table calendar">
                     <thead>
