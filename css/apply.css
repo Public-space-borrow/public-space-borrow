@@ -27,8 +27,8 @@
     padding: 15%;
 }
 
-main .container{
-    max-width: 80%;
+.container_table{
+    max-width: 70%;
 }
 
 .clickable {
@@ -76,43 +76,3 @@ label {
     text-align: center;
 }
 
-#name,#room,#phone, h5{
-    width: 200px;
-    height: 30px;
-    margin: 10px;
-    color: #1b3a59;
-}
-
-#myForm{
-    font-family:微軟正黑體;
-    display: none;
-    margin: 50px;
-    padding: 10px;
-    width: 240px;
-    height: 300px;
-    background-color: white;
-    border-radius: 5px;
-    border-top: 10px solid #1b3a59;
-    box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
-    
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-}
-
-.submit{
-    color: white;  
-    background: #1b3a59;
-    width: 200px;
-    height: 30px;
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 0px;
-}
-
-.submit:hover{
-  background: #99bd60;
-}

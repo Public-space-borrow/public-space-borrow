@@ -624,7 +624,6 @@ progress {
   font-size: 0.875em;
   color: #6c757d;
 }
-
 .container,
 .container-fluid,
 .container-xxl,
@@ -6917,6 +6916,7 @@ textarea.form-control-lg {
   z-index: 1;
   content: "";
 }
+
 
 .text-truncate {
   overflow: hidden;

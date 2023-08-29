@@ -48,7 +48,7 @@
                         <h1 class="fw-bolder">請選擇想借用的空間</h1>
                         <p class="lead fw-normal text-muted mb-0">Choose the area that you want to borrow</p>
                     </div>
-                    <div class="row gx-5 justify-content-center">
+                    <div class="row gx-5 justify-content-center card_row">
                         <!-- Yu Shu -->
                         <div class="col-lg-6 col-xl-4">
                             <img src="pic/Yu-Shu.jpeg" alt="雨樹服務站" style="width:100%">
