@@ -38,37 +38,38 @@ function show_hours() {
 }
 
 function modClass(data, $current) {
-    if(data.status == 'US') {
-        if(data.user_id != null) {
-            $current.children("a").html(data.user_id);
-            if(data.name == User.Name) {
-                if(transTime(data.period) > Now[1] || transDate(Now[0]) != data.day) {
-                    $current.addClass("self");
-                }
+    // if(data.status == 'US') {
+    //     if(data.user_id != null) {
+    //         $current.children("a").html(data.user_id);
+    //         if(data.name == User.Name) {
+    //             if(transTime(data.period) > Now[1] || transDate(Now[0]) != data.day) {
+    //                 $current.addClass("self");
+    //             }
                 
-            }
-        }
-        else {
-            $current.children("a").html(data.bname_id);
-            if(band_list.includes(data.bname_id)) {
-                if(transTime(data.period) > Now[1] || transDate(Now[0]) != data.day) {
-                    $current.addClass("self");
-                }
-            }
-        }
-        $current.removeClass("clickable");
-    }
+    //         }
+    //     }
+    //     else {
+    //         $current.children("a").html(data.bname_id);
+    //         if(band_list.includes(data.bname_id)) {
+    //             if(transTime(data.period) > Now[1] || transDate(Now[0]) != data.day) {
+    //                 $current.addClass("self");
+    //             }
+    //         }
+    //     }
+    //     $current.removeClass("clickable");
+    // }
 
 
-    else if(data.status == 'NA') {
-        $current.removeClass("clickable");
-        $current.children("a").html(data.reson);
-    }
-    else {
-        $current.addClass("clickable");
-        $current.removeClass("self");
-        $current.children("a").empty();
-    }
+    // else if(data.status == 'NA') {
+    //     $current.removeClass("clickable");
+    //     $current.children("a").html(data.reson);
+    // }
+    // else {
+    //     $current.addClass("clickable");
+    //     $current.removeClass("self");
+    //     $current.children("a").empty();
+    // }
+    $current.addClass("clickable");
 }
 
 
@@ -146,7 +147,7 @@ function updateButtonAct() {
     });
 
     //self but
-    $('.self a').unbind().click(function(event){
+    $('.clickable a').unbind().click(function(event){
         event.preventDefault();
         var time = $(this).parent();
         time = time.siblings('.timeText:first').html();
