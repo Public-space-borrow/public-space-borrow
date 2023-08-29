@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     // Use the simulated data in your code
     for (var i in hours) {
-        var time = hours[i].Start_time;
+        var time = hours[i].startTime;
         $("tbody").append(template);
         var $newRow = $("tr").last();
         var $firstTd = $newRow.find("td:first-child"); // 第一個 td
@@ -29,7 +29,7 @@ function show_hours() {
     for (var hour = startTime; hour <= 24; hour++) {
         var time = `${hour}:00`;
         var rowData = {
-            Start_time: time,
+            startTime: time,
         };
         hours.push(rowData);
     }
@@ -77,6 +77,7 @@ function updateButtonAct() {
     //normal but
     $(".registButt a").unbind().click(function(event){
         event.preventDefault();
+        
     });
     //clickable but
     $(".clickable a").unbind().click(function(event){
@@ -89,10 +90,18 @@ function updateButtonAct() {
             headerTitle: '申請人資料',
             headerControls: 'closeonly',
             contentSize: {width: () => window.innerWidth * 0.4, height: () => window.innerHeight * 0.3},
-            animateIn: 'jsPanelFadeIn',
-            position: 'center 50 50',
+            position: 'center 0 0',
             closeOnBackdrop: true,
             closeOnEscape: true,
+            content: `
+                    <form action="" method="post" class="form-container">
+                        <input type="text" id="name" name="name" placeholder="姓名" required>
+                        <input type="room" id="room" name="room" placeholder="房號" required>
+                        <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
+                        <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                        <input type="submit" value="提交申請" class="submit">
+                    </form>
+                `,
             callback: function() {
                 this.content.css({ 'font-family': '微軟正黑體' });
                 this.setTheme({
@@ -103,17 +112,17 @@ function updateButtonAct() {
                     border: 'medium solid #157B75'
                 });
                 
-                this.content.innerHTML = `
-                    <form class="form-container">
-                        <h5>確定預約${time} ${date}?</h5>
-                        <form class="container" action="#">
-                            <input type="text" id="stu_id" name="stu_id" placeholder="學號" required>
-                            <input type="room" id="room" name="room" placeholder="房號" required>
-                            <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
-                            <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
-                            <button class="ui-button ui-widget ui-corner-all" id="comfirmBut">確定預約</button>
-                        </form>
-                    </form>`
+                // this.content.innerHTML = `
+                //     <form class="form-container">
+                //         <h5>確定預約${time} ${date}?</h5>
+                //         <form class="container" action="#">
+                //             <input type="text" id="stu_id" name="stu_id" placeholder="學號" required>
+                //             <input type="room" id="room" name="room" placeholder="房號" required>
+                //             <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
+                //             <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                //             <button class="ui-button ui-widget ui-corner-all" id="comfirmBut">確定預約</button>
+                //         </form>
+                //     </form>`
                 
                 
                 $("#comfirmBut").click(function(event){
@@ -208,25 +217,4 @@ function updateButtonAct() {
         });
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
