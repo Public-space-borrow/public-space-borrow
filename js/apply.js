@@ -196,15 +196,15 @@ function updateButtonAct() {
                                 alert(response.result);
                             }
                             
-    //                     },
-    //                     error: function(response){
-    //                         alert("reservation failed!!");
+                        },
+                        error: function(response){
+                            alert("reservation failed!!");
 
-    //                     }
-    //                 });
-    //                 panel.close();
-    //             });
-    //         },
-    //     });
-    // });
+                        }
+                    });
+                    panel.close();
+                });
+            },
+        });
+    });
 }
