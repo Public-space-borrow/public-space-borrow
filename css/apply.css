@@ -76,3 +76,71 @@ label {
     text-align: center;
 }
 
+#name,#room,#phone, #pwd, h4{
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    color: #212529;
+}
+
+h4{
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    color: #212529;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* #container1{
+    margin: 50px;
+    padding: 10px;
+    width: 230px;
+    height: 250px;
+    background-color: white;
+    border-radius: 5px;
+    border-top: 10px solid #1b3a59;
+    box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1); */
+    
+    /*定位對齊*/
+    /* position:relative;   
+    margin: auto;
+    top: 100px;
+    text-align:center;  
+} */
+
+
+.submit{
+    color: white;  
+    background: #212529;
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0px;
+}
+
+.submit:hover{
+  background:#516464;
+}
+
+input{
+    padding: 5px;
+    border: none; 
+    border:solid 1px #ccc;
+    border-radius: 5px;
+}
+
+.echo{
+    position:relative;   
+    margin: auto;
+    top: 100px;
+    text-align:center;
+}
+
+.go{
+    display: flex;
+    margin-top:-20px;
+}
+

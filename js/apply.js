@@ -20,7 +20,33 @@ $(document).ready(function(){
             modClass(hours[i][j], $lastTd);
         }
     }
+    updateButtonAct();
 });
+
+function collect_regist(space_id) {
+    $.ajax({
+        url : "request_regist.php",
+        type : "post",
+        data:{'id' : $("#hidden_id").html()},
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            for(let i in response) {
+                let index = response[i].Start_time - 8;
+                let days = $("tbody tr").eq(index);
+                days.find("td").each(function(){
+                    if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) {
+                        this.children[1].innerHTML = response[i].user_name + "<br>" + response[i].user_id;
+                    }
+                });
+            }
+        },
+        error: function(response){
+            alert("AJAX error");
+            console.log(response);
+        }
+    }); //initial finish
+}
 
 function show_hours() {
     var hours = [];
@@ -77,54 +103,31 @@ function updateButtonAct() {
     //normal but
     $(".registButt a").unbind().click(function(event){
         event.preventDefault();
-        
     });
     //clickable but
-    $(".clickable a").unbind().click(function(event){
+    $(".registButt a").unbind().click(function(event){
         event.preventDefault();
         var time = $(this).parent();
         time = time.siblings('.timeText:first').html();
         var date = $(this).parent().children("p").html();
         var panel = jsPanel.modal.create({
-            theme: 'primary',
-            headerTitle: '申請人資料',
-            headerControls: 'closeonly',
-            contentSize: {width: () => window.innerWidth * 0.4, height: () => window.innerHeight * 0.3},
+            theme: 'dark',
+            contentSize: '250 330',
+            headerTitle: '',
             position: 'center 0 0',
-            closeOnBackdrop: true,
-            closeOnEscape: true,
             content: `
-                    <form action="" method="post" class="form-container">
-                        <input type="text" id="name" name="name" placeholder="姓名" required>
-                        <input type="room" id="room" name="room" placeholder="房號" required>
-                        <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
-                        <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
-                        <input type="submit" value="提交申請" class="submit">
-                    </form>
-                `,
-            callback: function() {
-                this.content.css({ 'font-family': '微軟正黑體' });
-                this.setTheme({
-                    bgPanel: '#fff',
-                    bgContent: '#b3b3b3',
-                    colorHeader: '#1b3a59',
-                    colorContent: '#black',
-                    border: 'medium solid #157B75'
-                });
-                
-                // this.content.innerHTML = `
-                //     <form class="form-container">
-                //         <h5>確定預約${time} ${date}?</h5>
-                //         <form class="container" action="#">
-                //             <input type="text" id="stu_id" name="stu_id" placeholder="學號" required>
-                //             <input type="room" id="room" name="room" placeholder="房號" required>
-                //             <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
-                //             <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
-                //             <button class="ui-button ui-widget ui-corner-all" id="comfirmBut">確定預約</button>
-                //         </form>
-                //     </form>`
-                
-                
+            <h4>預約資料</h4>
+            <div id="container1">
+                <form action="" method="post" class="form-container">
+                    <input type="text" id="name" name="name" placeholder="姓名" required>
+                    <input type="room" id="room" name="room" placeholder="房號" required>
+                    <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
+                    <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                    <input type="submit" value="提交申請" class="submit">
+                </form>
+            </div>
+            `,
+            callback: function(panel) {
                 $("#comfirmBut").click(function(event){
                     event.preventDefault();
                     var stu_id = $("#stu_id").val();
@@ -161,31 +164,21 @@ function updateButtonAct() {
         var time = $(this).parent();
         time = time.siblings('.timeText:first').html();
         var date = $(this).parent().children("p").html();
-
         var panel =jsPanel.modal.create({
-            theme: 'primary',
-            headerTitle: '取消預約',
-            headerControls: 'closeonly',
-            contentSize: {width: () => window.innerWidth * 0.4, height: () => window.innerHeight * 0.3},
-            animateIn: 'jsPanelFadeIn',
-            position: 'center 50 50',
-            closeOnEscape: true,
+            theme: 'dark',
+            contentSize: '250 180',
+            headerTitle: '',
+            position: 'center 0 0',
+            content: `
+            <h4>取消預約</h4>
+            <div id="container1">
+                <form action="" method="post" class="form-container">
+                    <input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required>
+                    <input type="submit" value="提交申請" class="submit">
+                </form>
+            </div>
+            `,
             callback: function() {
-                this.content.css({ 'font-family': '微軟正黑體' });
-                this.setTheme({
-                    bgPanel: '#fff',
-                    bgContent: '#b3b3b3',
-                    colorHeader: '#1b3a59',
-                    colorContent: '#black',
-                    border: 'medium solid #157B75'
-                });
-
-                this.content.innerHTML = 
-                '<p class="panelText">確定取消'+ time + date +'？</p>' + 
-                '<input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required></input>'
-                '<button class="ui-button ui-widget ui-corner-all" id="comfirmBut">comfirm</button>';
-                
-
                 $("#comfirmBut").click(function(event){
                     $.ajax({
                         url: '',
@@ -217,4 +210,3 @@ function updateButtonAct() {
         });
     });
 }
-
