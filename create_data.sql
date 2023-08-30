@@ -10,3 +10,8 @@ INSERT INTO Space (ID, Space_name, region) VALUES (6, "武嶺交誼聽", "武嶺
 INSERT INTO Space (ID, Space_name, region) VALUES (7, "翠亨B棟討論室", "翠亨");
 INSERT INTO Space (ID, Space_name, region) VALUES (8, "翠亨B棟休憩室", "翠亨");
 INSERT INTO Space (ID, Space_name, region, link) VALUES (9, "翠亨B棟會議室", "翠亨", "https://docs.google.com/forms/d/e/1FAIpQLSfLXN2acYp-AeAPoZp2EHy511CS0bR1faOM-gWGtBxfRziygA/viewform");
+
+
+INSERT INTO Register (Start_time, Space_id, Date, user_id, user_phone, user_dormnumber, change_pwd, user_name) VALUES (8, 1, "二", "B094020024", "0905477941", "84208", "123", "陳啟誠");
+INSERT INTO Register (Start_time, Space_id, Date, user_id, user_phone, user_dormnumber, change_pwd, user_name) VALUES (9, 1, "二", "B094020024", "0905477941", "84208", "123", "陳啟誠");
+INSERT INTO Register (Start_time, Space_id, Date, user_id, user_phone, user_dormnumber, change_pwd, user_name) VALUES (10, 1, "五", "B094020024", "0905477941", "84208", "123", "陳啟誠");

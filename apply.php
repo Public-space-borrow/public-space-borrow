@@ -14,6 +14,10 @@
     $stmt->execute();
     $row = $stmt->fetch();
     $region = $row['region'];
+    if($region == NULL) {
+        echo "None";
+    }
+    else{
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +35,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="js/apply.js"></script>
@@ -92,7 +96,6 @@
                             <td class="registButt position-relative">
                                 <p class="date">一</p>
                                 <a href="#" class="stretched-link">
-                                
                                 </a>
                             </td>
                             <td class="registButt position-relative">
@@ -148,6 +151,10 @@
                 </div>
             </div>
         </footer>
+        <p id="hidden_id" display:none;><?=$_GET['space_id']?></p>
         
     </body>
 </html>
+<?php
+    }
+?>
