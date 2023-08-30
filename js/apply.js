@@ -4,7 +4,8 @@ $(document).ready(function(){
     $("#car-type").selectmenu();
     $("tbody").empty();
     var hours = show_hours();
-
+    let space_id = $("#hidden_id").html()
+    collect_regist(space_id);
     // Use the simulated data in your code
     for (var i in hours) {
         var time = hours[i].startTime;
@@ -22,7 +23,6 @@ $(document).ready(function(){
     }
     updateButtonAct();
 });
-
 function collect_regist(space_id) {
     $.ajax({
         url : "request_regist.php",
@@ -47,19 +47,17 @@ function collect_regist(space_id) {
         }
     }); //initial finish
 }
-
 function show_hours() {
     var hours = [];
     var startTime = 8;  // Starting hour
 
-    for (var hour = startTime; hour <= 24; hour++) {
+    for (var hour = startTime; hour < 24; hour++) {
         var time = `${hour}:00`;
         var rowData = {
             startTime: time,
         };
         hours.push(rowData);
     }
-
     return hours;
 }
 
@@ -198,15 +196,15 @@ function updateButtonAct() {
                                 alert(response.result);
                             }
                             
-                        },
-                        error: function(response){
-                            alert("reservation failed!!");
+    //                     },
+    //                     error: function(response){
+    //                         alert("reservation failed!!");
 
-                        }
-                    });
-                    panel.close();
-                });
-            },
-        });
-    });
+    //                     }
+    //                 });
+    //                 panel.close();
+    //             });
+    //         },
+    //     });
+    // });
 }
