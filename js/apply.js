@@ -30,7 +30,6 @@ function collect_regist(space_id) {
         data:{'id' : $("#hidden_id").html()},
         dataType: "json",
         success: function(response) {
-            console.log(response);
             for(let i in response) {
                 let index = response[i].Start_time - 8;
                 let days = $("tbody tr").eq(index);
@@ -118,10 +117,11 @@ function updateButtonAct() {
             <div id="container1">
                 <form action="" method="post" class="form-container">
                     <input type="text" id="name" name="name" placeholder="姓名" required>
+                    <input type="text" id="stu_id" name="stu_id" placeholder="學號" required>
                     <input type="room" id="room" name="room" placeholder="房號" required>
                     <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
                     <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
-                    <input type="submit" value="提交申請" class="submit">
+                    <input type="submit" value="提交申請" class="submit" id="comfirmBut">
                 </form>
             </div>
             `,
@@ -132,8 +132,10 @@ function updateButtonAct() {
                     var room = $("#room").val();
                     var phone = $("#phone").val();
                     var pwd = $("#pwd").val();
+                    let name = $("#name").val();
+                    let Space_id = $("#hidden_id").html();
                     $.ajax({
-                        url: '',
+                        url: 'add_register.php',
                         type: 'POST',
                         data: {
                             'Space_id':Space_id,
@@ -141,16 +143,20 @@ function updateButtonAct() {
                             'user_id': stu_id,
                             'user_dormnumber': room,
                             'user_phone': phone,
-                            'change_pwd': pwd
+                            'change_pwd': pwd,
+                            'mode': 'add',
+                            'date': date,
+                            'name': name,
                         },
                         success: function(response){
-                            alert(response.result);
+                            alert(response);
                         },
                         error: function(response){
                             alert("預約失敗");
                         }
                     });
                     panel.close();
+                    location.reload(true);
                 });
             },
         });
