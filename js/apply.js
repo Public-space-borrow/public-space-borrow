@@ -15,13 +15,12 @@ $(document).ready(function(){
         var $lastTd = $newRow.find("td:last-child");   // 最後一個 td
         $firstTd.html(time);
         $lastTd.html(time);
-
-        for (var j in hours[i]) {
-            modClass(hours[i][j], $firstTd);
-            modClass(hours[i][j], $lastTd);
-        }
+        // for (var j in hours[i]) {
+        //     modClass(hours[i][j], $firstTd);
+        //     modClass(hours[i][j], $lastTd);
+        // }
     }
-    updateButtonAct();
+    
 });
 function collect_regist(space_id) {
     $.ajax({
@@ -36,9 +35,12 @@ function collect_regist(space_id) {
                 days.find("td").each(function(){
                     if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) {
                         this.children[1].innerHTML = response[i].user_name + "<br>" + response[i].user_id;
+                        this.classList.add('used');
+                        this.classList.remove('registButt');
                     }
                 });
             }
+            updateButtonAct();
         },
         error: function(response){
             alert("AJAX error");
@@ -97,6 +99,62 @@ function modClass(data, $current) {
 
 
 function updateButtonAct() {
+    //self but
+    $(".used a").unbind().click(function(event){
+        event.preventDefault();
+        alert("hi");
+    });
+    $('.used a').unbind().click(function(event){
+        event.preventDefault();
+        var time = $(this).parent();
+        time = time.siblings('.timeText:first').html();
+        var date = $(this).parent().children("p").html();
+        var panel =jsPanel.modal.create({
+            theme: 'dark',
+            contentSize: '250 180',
+            headerTitle: '',
+            position: 'center 0 0',
+            content: `
+            <h4>取消預約</h4>
+            <div id="container1">
+                <form action="" method="post" class="form-container">
+                    <input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required>
+                    <input type="submit" value="提交申請" class="submit" id="comfirmBut">
+                </form>
+            </div>
+            `,
+            callback: function() {
+                $("#comfirmBut").click(function(event){
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: {
+                            'date' : date, 
+                            'time': time,
+                            'change_pwd': pwd,
+                            'space_id': $("#hidden_id").html(),
+                            'mode': 'delete', 
+                        },
+                        success: function(response){
+                            if(response.result == true) {
+                                alert("取消成功");
+                            }
+                            else {
+                                alert(response.result);
+                            }
+                            
+                        },
+                        error: function(response){
+                            alert("reservation failed!!");
+
+                        }
+                    });
+                    panel.close();
+                });
+            },
+        });
+    });
+
     //normal but
     $(".registButt a").unbind().click(function(event){
         event.preventDefault();
@@ -157,58 +215,6 @@ function updateButtonAct() {
                     });
                     panel.close();
                     location.reload(true);
-                });
-            },
-        });
-    });
-
-    //self but
-    $('.clickable a').unbind().click(function(event){
-        event.preventDefault();
-        var time = $(this).parent();
-        time = time.siblings('.timeText:first').html();
-        var date = $(this).parent().children("p").html();
-        var panel =jsPanel.modal.create({
-            theme: 'dark',
-            contentSize: '250 180',
-            headerTitle: '',
-            position: 'center 0 0',
-            content: `
-            <h4>取消預約</h4>
-            <div id="container1">
-                <form action="" method="post" class="form-container">
-                    <input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required>
-                    <input type="submit" value="提交申請" class="submit">
-                </form>
-            </div>
-            `,
-            callback: function() {
-                $("#comfirmBut").click(function(event){
-                    $.ajax({
-                        url: '',
-                        type: 'POST',
-                        data: {
-                            'date' : date, 
-                            'time': time,
-                            'change_pwd': pwd,
-                            'mode': 'delete', 
-                            'out': out
-                        },
-                        success: function(response){
-                            if(response.result == true) {
-                                alert("取消成功");
-                            }
-                            else {
-                                alert(response.result);
-                            }
-                            
-                        },
-                        error: function(response){
-                            alert("reservation failed!!");
-
-                        }
-                    });
-                    panel.close();
                 });
             },
         });

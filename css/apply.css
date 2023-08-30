@@ -20,7 +20,9 @@
 .registButt:hover {
     background-color: gray;
 }
-
+.used:hover {
+    background-color: gray;
+}
 .timeText {
     font-size: 0.7em;
     
@@ -31,9 +33,6 @@
     max-width: 70%;
 }
 
-.clickable {
-    
-}
 
 @media (max-width: 400px) {
     .calendar td{
