@@ -158,6 +158,7 @@
                 </div>
             </div>
         </footer>
+        <p id="hidden_id" display:none;><?=$_GET['space_id']?></p>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
