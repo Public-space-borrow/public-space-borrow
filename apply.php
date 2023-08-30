@@ -48,13 +48,13 @@
         <main class="flex-shrink-0">
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-516464">
-                <div class="container px-5">
+                <div class="container px-7">
                     <a class="navbar-brand" href="main_page.php">中山大學宿舍公共空間借用系統</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
-                            <li class="nav-item"><a class="nav-link" href="notice.html">借用須知</a></li>
+                            <li class="nav-item"><a class="nav-link" href="faq.html">借用須知</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,14 +62,9 @@
             <div class="text-center mt-5 mb-4">
                 <p class="lead fw-normal text-muted mb-0">借用空間：</p>
                 <select class="wide" id="dropdown">
-                    <?php
-                        $sql = "SELECT * from Space where region = '".$region."'";
-                        foreach($conn->query($sql) as $row) {
-                    ?>
-                            <option value=<?=$row['ID']?> <?php if ($_GET['space_id'] == $row['ID']) echo 'selected'; ?>><?=$row['Space_name']?></option>
-                    <?php
-                        }
-                    ?>
+                    <option value="1-1">雨樹L棟會議室</option>
+                    <option value="1-2">雨樹廣場</option>
+                    <option value="1-3">翠亨L棟自煮空間</option>
                 </select>
             </div>
             
@@ -92,10 +87,12 @@
                         <!--a row of registration-->
                         <tr>
                             <td class="timeText">
+                                <div class="timeSlot"></div>
                             </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                             <td class="registButt position-relative">
                                 <p class="date">一</p>
                                 <a href="#" class="stretched-link">
+                                
                                 </a>
                             </td>
                             <td class="registButt position-relative">
@@ -134,13 +131,23 @@
                                 </a>
                             </td>
                             <td class="timeText">
+                                <div class="timeSlot"></div>
                             </td>
                         </tr>
                         <!--a row of registration-->
                     </tbody>
                 </table>
-            </div>            
-            
+            </div>
+            <div class="form-popup" id="myForm">
+                <form class="form-container">
+                    <h5>申請人資料</h5>
+                    <form action="" method="post">
+                        <input type="text" id="name" name="name" placeholder="姓名" required>
+                        <input type="room" id="room" name="room" placeholder="房號" required>
+                        <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
+                        <input type="submit" value="提交申請" class="submit">
+                </form>
+            </div>
         </main>
         <!-- Footer-->
         <footer class="bg-516464 py-4 mt-auto">
@@ -152,9 +159,14 @@
             </div>
         </footer>
         <p id="hidden_id" display:none;><?=$_GET['space_id']?></p>
-        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <script src="js/apply.js"></script>
     </body>
 </html>
+
 <?php
     }
 ?>
