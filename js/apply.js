@@ -109,6 +109,7 @@ function updateButtonAct() {
         var time = $(this).parent();
         time = time.siblings('.timeText:first').html();
         var date = $(this).parent().children("p").html();
+        
         var panel =jsPanel.modal.create({
             theme: 'dark',
             contentSize: '250 180',
@@ -125,24 +126,19 @@ function updateButtonAct() {
             `,
             callback: function() {
                 $("#comfirmBut").click(function(event){
+                    console.log(pwd);
                     $.ajax({
-                        url: '',
+                        url: 'add_register.php',
                         type: 'POST',
                         data: {
                             'date' : date, 
-                            'time': time,
-                            'change_pwd': pwd,
+                            'Start_time': time,
+                            'change_pwd': $("#pwd").val(),
                             'space_id': $("#hidden_id").html(),
                             'mode': 'delete', 
                         },
                         success: function(response){
-                            if(response.result == true) {
-                                alert("取消成功");
-                            }
-                            else {
-                                alert(response.result);
-                            }
-                            
+                            alert(response);
                         },
                         error: function(response){
                             alert("reservation failed!!");
@@ -150,6 +146,7 @@ function updateButtonAct() {
                         }
                     });
                     panel.close();
+                    location.reload(true);
                 });
             },
         });

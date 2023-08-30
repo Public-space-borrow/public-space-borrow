@@ -27,8 +27,19 @@ if(isset($_POST['mode'])) {
             catch(Exception $e) {
                 echo $e;
             }
-            
-            
+        }
+    }
+    else if($_POST['mode'] == "delete"){
+        $sql = sprintf("DELETE FROM Register where Start_time = %d and Space_id = %d and Date = '%s';", $_POST['Start_time'], $_POST['space_id'], $_POST['date']);
+        $stmt = $conn->prepare(sprintf("SELECT change_pwd from Register where Start_time = %d and Space_id = %d and Date = '%s'", $_POST['Start_time'], $_POST['space_id'], $_POST['date']));
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if($row['change_pwd'] == $_POST['change_pwd']) {
+            $conn->query($sql);
+            echo "刪除成功！";
+        }
+        else {
+            echo "變更密碼錯誤！！";
         }
     }
 }
