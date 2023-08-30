@@ -140,8 +140,6 @@
                         <input type="submit" value="提交申請" class="submit">
                 </form>
             </div>
-            
-
         </main>
         <!-- Footer-->
         <footer class="bg-516464 py-4 mt-auto">
@@ -159,3 +157,7 @@
         <script src="js/apply.js"></script>
     </body>
 </html>
+
+<?php
+    }
+?>
