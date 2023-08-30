@@ -1,0 +1,38 @@
+<?php
+if(isset($_POST['mode'])) {
+    $servername = "114.35.222.181";
+    $username = "dormcenter";
+    $password = "59365937";
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=dorm", $username, $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      } catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+    if($_POST['mode'] == "add") {
+        $sql = sprintf("INSERT INTO Register (Start_time, Space_id, Date, user_id, user_phone, user_dormnumber, change_pwd, user_name) VALUES(%d, %s, '%s', '%s', '%s', %d, '%s', '%s')", $_POST['Start_time'], $_POST['Space_id'], $_POST['date'], $_POST['user_id'], $_POST['user_phone'], $_POST['user_dormnumber'], $_POST['change_pwd'], $_POST['name']);
+        $stmt = $conn->prepare(sprintf("select COUNT(*) as c from Register where Start_time = %d and Date = '%s' and Space_id = %d", $_POST['Start_time'], $_POST['date'], $_POST['Space_id']));
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if($row['c'] > 0) {
+            echo "這個時段已經被預約！";
+        }
+        else {
+            try {
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                echo "預約成功";
+            }
+            catch(Exception $e) {
+                echo $e;
+            }
+            
+            
+        }
+    }
+}
+else {
+    throw new Exception("Error");
+}
+?>
