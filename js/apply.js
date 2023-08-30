@@ -109,7 +109,7 @@ function updateButtonAct() {
         var date = $(this).parent().children("p").html();
         var panel = jsPanel.modal.create({
             theme: 'dark',
-            contentSize: '250 380',
+            contentSize: '250 330',
             headerTitle: '',
             position: 'center 0 0',
             content: `
@@ -128,11 +128,11 @@ function updateButtonAct() {
             callback: function(panel) {
                 $("#comfirmBut").click(function(event){
                     event.preventDefault();
-                    var name = $("#name").val();
                     var stu_id = $("#stu_id").val();
                     var room = $("#room").val();
                     var phone = $("#phone").val();
                     var pwd = $("#pwd").val();
+                    let name = $("#name").val();
                     let Space_id = $("#hidden_id").html();
                     $.ajax({
                         url: 'add_register.php',
@@ -140,12 +140,13 @@ function updateButtonAct() {
                         data: {
                             'Space_id':Space_id,
                             'Start_time': time,
-                            'date' : date,
                             'user_id': stu_id,
                             'user_dormnumber': room,
                             'user_phone': phone,
                             'change_pwd': pwd,
-                            'user_name': name,
+                            'mode': 'add',
+                            'date': date,
+                            'name': name,
                         },
                         success: function(response){
                             alert(response);
@@ -169,22 +170,17 @@ function updateButtonAct() {
         var date = $(this).parent().children("p").html();
         var panel =jsPanel.modal.create({
             theme: 'dark',
-            contentSize: '250 380',
+            contentSize: '250 180',
             headerTitle: '',
             position: 'center 0 0',
             content: `
-            <h4>修改預約資料/取消預約</h4>
+            <h4>取消預約</h4>
             <div id="container1">
                 <form action="" method="post" class="form-container">
-                    <input type="text" id="name" name="name" placeholder="姓名" required value="${parsedData.user_name}">
-                    <input type="text" id="stu_id" name="stu_id" placeholder="學號" required value="${parsedData.user_id}">
-                    <input type="text" id="room" name="room" placeholder="房號" required value="${parsedData.user_dormnumber}">
-                    <input type="text" id="phone" name="phone" placeholder="手機號碼" required value="${parsedData.user_phone}">
                     <input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required>
-                    <input type="submit" value="修改資料" class="submit">
-                    <input type="submit" value="取消申請" class="cancel">
+                    <input type="submit" value="提交申請" class="submit">
                 </form>
-            </div>           
+            </div>
             `,
             callback: function() {
                 $("#comfirmBut").click(function(event){

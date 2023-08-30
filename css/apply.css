@@ -12,7 +12,6 @@
     width: 10%;
     height: 140px;
     vertical-align: middle;
-    font-size: 16px;
 }
 
 .registButt{
@@ -24,7 +23,12 @@
 
 .timeText {
     font-size: 0.7em;
+    
     padding: 15%;
+}
+
+.container_table{
+    max-width: 70%;
 }
 
 .clickable {
@@ -36,11 +40,6 @@
         width: 10%;
         height: 40px;
     }
-    .calendar a{
-        text-decoration: none;
-        color: black;
-        font-size: 8px;
-    }
 }
 
 @media (max-width: 1000px) {
@@ -48,22 +47,12 @@
         width: 10%;
         height: 70px;
     }
-    .calendar a{
-        text-decoration: none;
-        color: black;
-        font-size: 12px;
-    }
 }
 
 @media (max-width: 1500px) {
     .calendar td{
         width: 10%;
         height: 90px;
-    }
-    .calendar a{
-        text-decoration: none;
-        color: black;
-        font-size: 16px;
     }    
 }
 
@@ -87,7 +76,7 @@ label {
     text-align: center;
 }
 
-#name,#stu_id,#room,#phone, #pwd, h4{
+#name,#room,#phone, #pwd, h4{
     width: 200px;
     height: 30px;
     margin: 10px;
@@ -143,4 +132,15 @@ input{
     border-radius: 5px;
 }
 
+.echo{
+    position:relative;   
+    margin: auto;
+    top: 100px;
+    text-align:center;
+}
+
+.go{
+    display: flex;
+    margin-top:-20px;
+}
 
