@@ -109,7 +109,7 @@ function updateButtonAct() {
         var date = $(this).parent().children("p").html();
         var panel = jsPanel.modal.create({
             theme: 'dark',
-            contentSize: '250 330',
+            contentSize: '250 380',
             headerTitle: '',
             position: 'center 0 0',
             content: `
@@ -128,6 +128,7 @@ function updateButtonAct() {
             callback: function(panel) {
                 $("#comfirmBut").click(function(event){
                     event.preventDefault();
+                    var name = $("#name").val();
                     var stu_id = $("#stu_id").val();
                     var room = $("#room").val();
                     var phone = $("#phone").val();
@@ -140,13 +141,12 @@ function updateButtonAct() {
                         data: {
                             'Space_id':Space_id,
                             'Start_time': time,
+                            'date' : date,
                             'user_id': stu_id,
                             'user_dormnumber': room,
                             'user_phone': phone,
                             'change_pwd': pwd,
-                            'mode': 'add',
-                            'date': date,
-                            'name': name,
+                            'user_name': name
                         },
                         success: function(response){
                             alert(response);
