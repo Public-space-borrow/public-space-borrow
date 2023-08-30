@@ -133,7 +133,6 @@ function updateButtonAct() {
                     var room = $("#room").val();
                     var phone = $("#phone").val();
                     var pwd = $("#pwd").val();
-                    let name = $("#name").val();
                     let Space_id = $("#hidden_id").html();
                     $.ajax({
                         url: 'add_register.php',
@@ -146,7 +145,7 @@ function updateButtonAct() {
                             'user_dormnumber': room,
                             'user_phone': phone,
                             'change_pwd': pwd,
-                            'user_name': name
+                            'user_name': name,
                         },
                         success: function(response){
                             alert(response);
