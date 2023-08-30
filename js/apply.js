@@ -111,15 +111,19 @@ function updateButtonAct() {
         var date = $(this).parent().children("p").html();
         var panel =jsPanel.modal.create({
             theme: 'dark',
-            contentSize: '250 180',
+            contentSize: '280 350',
             headerTitle: '',
             position: 'center 0 0',
             content: `
             <h4>取消預約</h4>
             <div id="container1">
+                <p>姓名：</p>
+                <p>學號：</p>
+                <p>房號：</p>
+                <p>手機號碼：</p>
                 <form action="" method="post" class="form-container">
-                    <input type="text" id="pwd" name="pwd" placeholder="輸入自訂密碼" required>
-                    <input type="submit" value="提交申請" class="submit" id="comfirmBut">
+                    <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                    <input type="submit" value="確認取消" class="submit" id="comfirmBut">
                 </form>
             </div>
             `,
@@ -167,7 +171,7 @@ function updateButtonAct() {
         var date = $(this).parent().children("p").html();
         var panel = jsPanel.modal.create({
             theme: 'dark',
-            contentSize: '250 330',
+            contentSize: '280 370',
             headerTitle: '',
             position: 'center 0 0',
             content: `

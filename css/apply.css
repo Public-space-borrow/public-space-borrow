@@ -75,7 +75,7 @@ label {
     text-align: center;
 }
 
-#name,#room,#phone, #pwd, h4{
+#stu_id,#name,#room,#phone, #pwd, h4{
     width: 200px;
     height: 30px;
     margin: 10px;
