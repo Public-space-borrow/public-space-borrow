@@ -33,10 +33,12 @@ function collect_regist(space_id) {
                 let index = response[i].Start_time - 8;
                 let days = $("tbody tr").eq(index);
                 days.find("td").each(function(){
-                    if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) {
+                    if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) { 
                         this.children[1].innerHTML = response[i].user_name + "<br>" + response[i].user_id;
                         this.classList.add('used');
                         this.classList.remove('registButt');
+                        this.children[2].innerHTML = JSON.stringify(response[i]);
+                        console.log(JSON.parse(this.children[2].innerHTML));
                     }
                 });
             }

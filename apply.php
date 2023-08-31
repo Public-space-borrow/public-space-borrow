@@ -97,41 +97,43 @@
                                 <p class="date">一</p>
                                 <a href="#" class="stretched-link">
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">二</p>
                                 <a href="#" class="stretched-link">
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">三</p>
                                 <a href="#" class="stretched-link">
-    
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">四</p>
                                 <a href="#" class="stretched-link">
-    
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">五</p>
                                 <a href="#" class="stretched-link">
-    
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">六</p>
                                 <a href="#" class="stretched-link">
-    
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="registButt position-relative">
                                 <p class="date">日</p>
                                 <a href="#" class="stretched-link">
-    
                                 </a>
+                                <div class="detail"></div>
                             </td>
                             <td class="timeText">
                             </td>

@@ -58,7 +58,9 @@
 .date {
     display: none;
 }
-
+.detail {
+    display: none;
+}
 .self{
     
 }
