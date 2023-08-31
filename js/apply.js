@@ -38,7 +38,6 @@ function collect_regist(space_id) {
                         this.classList.add('used');
                         this.classList.remove('registButt');
                         this.children[2].innerHTML = JSON.stringify(response[i]);
-                        console.log(JSON.parse(this.children[2].innerHTML));
                     }
                 });
             }
@@ -111,7 +110,7 @@ function updateButtonAct() {
         var time = $(this).parent();
         time = time.siblings('.timeText:first').html();
         var date = $(this).parent().children("p").html();
-        
+        let detail = JSON.parse($(this).siblings('.detail:first').html());
         var panel =jsPanel.modal.create({
             theme: 'dark',
             contentSize: '280 350',
