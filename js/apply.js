@@ -34,7 +34,10 @@ function collect_regist(space_id) {
                 let days = $("tbody tr").eq(index);
                 days.find("td").each(function(){
                     if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) { 
-                        this.children[1].innerHTML = response[i].user_name + "<br>" + response[i].user_id;
+                        this.children[1].innerHTML = `
+                            <span>${response[i].user_name}</span><br>
+                            <span class= "span2">${response[i].user_id}</span>
+                        `;
                         this.classList.add('used');
                         this.classList.remove('registButt');
                         this.children[2].innerHTML = JSON.stringify(response[i]);
@@ -119,12 +122,14 @@ function updateButtonAct() {
             content: `
             <h4>取消預約</h4>
             <div id="container1">
-                <p>姓名：</p>
-                <p>學號：</p>
-                <p>房號：</p>
-                <p>手機號碼：</p>
+                <div id="container_cancel">
+                    <p>姓名：${detail.user_name}</p>
+                    <p>學號：${detail.user_id}</p>
+                    <p>房號：${detail.user_dormnumber}</p>
+                    <p>手機號碼：${detail.user_phone}</p>
+                </div>
                 <form action="" method="post" class="form-container">
-                    <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                    <input type="password" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
                     <input type="submit" value="確認取消" class="submit" id="comfirmBut">
                 </form>
             </div>
@@ -180,7 +185,7 @@ function updateButtonAct() {
                     <input type="text" id="stu_id" name="stu_id" placeholder="學號" required>
                     <input type="room" id="room" name="room" placeholder="房號" required>
                     <input type="text" id="phone" name="phone" placeholder="手機號碼" required>
-                    <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                    <input type="password" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
                     <input type="submit" value="提交申請" class="submit" id="comfirmBut">
                 </form>
             </div>

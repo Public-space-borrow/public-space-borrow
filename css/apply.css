@@ -9,8 +9,8 @@
 }
 
 .calendar td{
-    width: 10%;
-    height: 140px;
+    /* width: 10%; */
+    /* height: 140px; */
     vertical-align: middle;
 }
 
@@ -25,7 +25,6 @@
 }
 .timeText {
     font-size: 0.7em;
-    
     padding: 15%;
 }
 
@@ -36,23 +35,39 @@
 
 @media (max-width: 400px) {
     .calendar td{
-        width: 10%;
-        height: 40px;
+        width: 45px;
+        height: 45px;
+    }
+    span{
+        font-size: 8px;
+    }
+    .span2{
+        display: none;
     }
 }
 
 @media (max-width: 1000px) {
     .calendar td{
-        width: 10%;
-        height: 70px;
+        width: 100px;
+        height: 100px;
+    }
+    span{
+        font-size: 12px;
+    }
+    .span2{
+        display: none;
     }
 }
 
 @media (max-width: 1500px) {
     .calendar td{
-        width: 10%;
-        height: 90px;
+        width: 140px;
+        height: 140px;
+        font-size: 16px;
     }    
+    span{
+        font-size: 16px;
+    }
 }
 
 .date {
@@ -93,24 +108,6 @@ h4{
     margin-right: auto;
 }
 
-/* #container1{
-    margin: 50px;
-    padding: 10px;
-    width: 230px;
-    height: 250px;
-    background-color: white;
-    border-radius: 5px;
-    border-top: 10px solid #1b3a59;
-    box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1); */
-    
-    /*定位對齊*/
-    /* position:relative;   
-    margin: auto;
-    top: 100px;
-    text-align:center;  
-} */
-
-
 .submit{
     color: white;  
     background: #212529;
@@ -145,3 +142,7 @@ input{
     margin-top:-20px;
 }
 
+#container_cancel{
+    text-align: left;
+    padding-left: 50px;
+}
