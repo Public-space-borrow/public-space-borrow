@@ -65,8 +65,8 @@ function collect_regist(space_id) {
                     if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) { 
                         this.children[1].innerHTML = `
                             <span>${response[i].user_name}</span><br>
-                        `;
                             <span class= "span2">${response[i].user_id}</span>
+                        `;
                         this.classList.add('used');
                         this.classList.remove('registButt');
                         this.children[2].innerHTML = JSON.stringify(response[i]);
@@ -122,7 +122,7 @@ function updateButtonAct() {
                     <p>手機號碼：${detail.user_phone}</p>
                 </div>
                 <form action="" method="post" class="form-container">
-                    <input type="password" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
+                    <input type="text" id="pwd" name="pwd" placeholder="資料修改密碼（自訂）" required>
                     <input type="submit" value="確認取消" class="submit" id="comfirmBut">
                 </form>
             </div>
