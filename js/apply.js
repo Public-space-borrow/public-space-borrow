@@ -65,12 +65,8 @@ function collect_regist(space_id) {
                     if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) { 
                         this.children[1].innerHTML = `
                             <span>${response[i].user_name}</span><br>
-                            <span class= "span2">${response[i].user_id}</span>
                         `;
-                        this.children[1].innerHTML = `
-                            <span>${response[i].user_name}</span><br>
                             <span class= "span2">${response[i].user_id}</span>
-                        `;
                         this.classList.add('used');
                         this.classList.remove('registButt');
                         this.children[2].innerHTML = JSON.stringify(response[i]);

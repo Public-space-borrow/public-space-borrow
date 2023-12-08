@@ -11,8 +11,6 @@
 .calendar td{
     /* width: 10%; */
     /* height: 140px; */
-    /* width: 10%; */
-    /* height: 140px; */
     vertical-align: middle;
 }
 
@@ -158,10 +156,6 @@ input{
     margin-top:-20px;
 }
 
-#container_cancel{
-    text-align: left;
-    padding-left: 50px;
-}
 #container_cancel{
     text-align: left;
     padding-left: 50px;
