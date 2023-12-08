@@ -1,14 +1,6 @@
 <?php
-    $servername = "140.117.177.166";
-    $username = "dormcenter";
-    $password = "59365937";
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=dorm", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    session_start();
+    include 'connect_db.php';
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +23,12 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-516464">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="">中山大學宿舍公共空間借用系統</a>
+                    <a class="navbar-brand" href="main_page.php">中山大學宿舍公共空間借用系統</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
-                            <li class="nav-item"><a class="nav-link" href="faq.html">借用須知</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/p/412-1092-18050.php?Lang=zh-tw">借用須知</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,7 +60,8 @@
                                             <li class="mb-2">
                                                 <a class="nav-link" href="<?=$link?>">
                                                     <i class="bi bi-pin-angle-fill"></i>
-                                                    <?=$row['Space_name']?>
+                                                    <?=$row['Space_name']?><br>
+                                                    <p class="eng_name"><?=$row['eng_name']?></p>
                                                 </a>
                                             </li>
                                         <?php
@@ -97,7 +90,8 @@
                                             <li class="mb-2">
                                                 <a class="nav-link" href="<?=$link?>">
                                                     <i class="bi bi-pin-angle-fill"></i>
-                                                    <?=$row['Space_name']?>
+                                                    <?=$row['Space_name']?><br>
+                                                    <p class="eng_name"><?=$row['eng_name']?></p>
                                                 </a>
                                             </li>
                                         <?php
@@ -126,7 +120,8 @@
                                             <li class="mb-2">
                                                 <a class="nav-link" href="<?=$link?>">
                                                     <i class="bi bi-pin-angle-fill"></i>
-                                                    <?=$row['Space_name']?>
+                                                    <?=$row['Space_name']?><br>
+                                                    <p class="eng_name"><?=$row['eng_name']?></p>
                                                 </a>
                                             </li>
                                         <?php

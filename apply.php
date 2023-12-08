@@ -1,14 +1,6 @@
 <?php
-    $servername = "140.117.177.166";
-    $username = "dormcenter";
-    $password = "59365937";
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=dorm", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    session_start();
+    include 'connect_db.php';
     $sql = "SELECT region from Space where ID = ".$_GET['space_id'];
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -54,7 +46,20 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
-                            <li class="nav-item"><a class="nav-link" href="notice.html">借用須知</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/p/412-1092-18050.php?Lang=zh-tw">借用須知</a></li>
+                            <?php
+                                if($_SESSION['mode'] == "admin") {
+                            ?>
+                            <li class="nav-item"><a class="nav-link mode_change" id="logout">登出</a></li>
+                            
+                            <?php
+                                }
+                                else {
+                            ?>
+                            <li class="nav-item"><a class="nav-link mode_change" id="private_mode">管理者模式</a></li>
+                            <?php
+                                }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -65,15 +70,17 @@
                     <?php
                         $sql = "SELECT * from Space where region = '".$region."'";
                         foreach($conn->query($sql) as $row) {
+                            if($row['link'] == NULL) {
                     ?>
                             <option value=<?=$row['ID']?> <?php if ($_GET['space_id'] == $row['ID']) echo 'selected'; ?>><?=$row['Space_name']?></option>
                     <?php
+                            }
                         }
                     ?>
                 </select>
             </div>
             
-            <div class="container px-4 py-5 bg-f9f9ff">
+            <div class="container px-2 py-3 bg-f9f9ff" id="timetable">
                 <table class="table calendar">
                     <thead>
                         <tr>
@@ -91,7 +98,7 @@
                     <tbody>
                         <!--a row of registration-->
                         <tr>
-                            <td class="timeText">
+                            <td class="timeText" id= "timetd">
                             </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                             <td class="registButt position-relative">
                                 <p class="date">一</p>
@@ -135,7 +142,7 @@
                                 </a>
                                 <div class="detail"></div>
                             </td>
-                            <td class="timeText">
+                            <td class="timeText" id= "timetd">
                             </td>
                         </tr>
                         <!--a row of registration-->
@@ -153,8 +160,7 @@
                 </div>
             </div>
         </footer>
-        <p id="hidden_id" display:none;><?=$_GET['space_id']?></p>
-        
+        <p id="hidden_id" ><?=$_GET['space_id']?></p>
     </body>
 </html>
 <?php

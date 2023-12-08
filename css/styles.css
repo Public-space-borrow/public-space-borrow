@@ -10856,3 +10856,7 @@ html {
   background-repeat: no-repeat;
   min-height: 15rem;
 }
+.eng_name {
+  font-size: 10px;
+  margin-left: 20px;
+}

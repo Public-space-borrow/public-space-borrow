@@ -11,6 +11,8 @@
 .calendar td{
     /* width: 10%; */
     /* height: 140px; */
+    /* width: 10%; */
+    /* height: 140px; */
     vertical-align: middle;
 }
 
@@ -24,14 +26,8 @@
     background-color: gray;
 }
 .timeText {
-    font-size: 0.7em;
-    padding: 15%;
+    font-size: 0.5em;
 }
-
-.container_table{
-    max-width: 70%;
-}
-
 
 @media (max-width: 400px) {
     .calendar td{
@@ -43,6 +39,14 @@
     }
     .span2{
         display: none;
+    }
+    #timetd{
+        width:40px;
+        font-size: 5px;
+        padding:0px;
+    }
+    th{
+        font-size: 15px;
     }
 }
 
@@ -57,15 +61,27 @@
     .span2{
         display: none;
     }
+    #timetd{
+        width:60px;
+        font-size: 12px;
+        padding:0px;
+    }
+    th{
+        font-size: 15px;
+    }
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 2500px) {
     .calendar td{
         width: 140px;
         height: 140px;
         font-size: 16px;
     }    
     span{
+        font-size: 16px;
+    }
+    #timetd{
+        width:60px;
         font-size: 16px;
     }
 }
@@ -145,4 +161,16 @@ input{
 #container_cancel{
     text-align: left;
     padding-left: 50px;
+}
+#container_cancel{
+    text-align: left;
+    padding-left: 50px;
+}
+
+#hidden_id {
+    display: none;
+}
+
+.mode_change {
+    cursor: pointer;
 }
