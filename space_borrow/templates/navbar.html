@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-516464">
+    <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'home'%}">中山大學宿舍公共空間借用系統</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://housing-osa.nsysu.edu.tw/p/412-1092-18050.php?Lang=zh-tw">借用須知</a></li>
+                {% if request.session.identity == "normal" %}
+                <li class="nav-item"><a class="nav-link mode_change" id="private_mode" style="cursor:pointer">管理者模式</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link mode_change" id="logout" style="cursor:pointer">登出</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<script>
+    $("#private_mode").unbind().click(function(event) {
+        event.preventDefault();
+        let pwd = prompt("請輸入管理者密碼:");
+        if(pwd != null) {
+            $.ajax({
+                url : "{% url 'private'%}",
+                type: "post",
+                data: {"pwd": pwd, "mode": "login"},
+                success: function(response) {
+                    alert(response);
+                    location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("AJAX error" + errorThrown);
+                    console.log('Error: ' + errorThrown);
+                }
+            });
+        }
+    });
+
+    $("#logout").unbind().click(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url : "{% url 'private'%}",
+            type: "post",
+            data: {"pwd": "", "mode":"logout"},
+            success: function(response) {
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert("AJAX error" + errorThrown);
+                console.log('Error: ' + errorThrown);
+            }
+        });
+    });
+</script>

@@ -1,4 +1,28 @@
-
+//csrf token setting
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+//csrf token setting
 $(document).ready(function(){
     var template = $("tbody").html();
     $("#car-type").selectmenu();
@@ -16,53 +40,21 @@ $(document).ready(function(){
         $firstTd.html(time);
         $lastTd.html(time);
     }
-    $("#private_mode").unbind().click(function(event) {
-        event.preventDefault();
-        let pwd = prompt("請輸入管理者密碼:");
-        if(pwd != null) {
-            $.ajax({
-                url : "admin_mode.php",
-                type: "post",
-                data: {"pwd": pwd, "mode": "login"},
-                success: function(response) {
-                    alert(response);
-                    location.reload();
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    alert("AJAX error" + errorThrown);
-                    console.log('Error: ' + errorThrown);
-                }
-            });
-        }
-    });
-    $("#logout").unbind().click(function(event) {
-        event.preventDefault();
-        $.ajax({
-            url : "admin_mode.php",
-            type: "post",
-            data: {"pwd": "", "mode":"logout"},
-            success: function(response) {
-                location.reload();
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                alert("AJAX error" + errorThrown);
-                console.log('Error: ' + errorThrown);
-            }
-        });
-    });
 });
 function collect_regist(space_id) {
     $.ajax({
-        url : "request_regist.php",
+        url : "request_regist",
         type : "post",
-        data:{'id' : $("#hidden_id").html()},
+        data:{
+            'id' : space_id,
+        },
         dataType: "json",
         success: function(response) {
             for(let i in response) {
-                let index = response[i].Start_time - 8;
+                let index = response[i].start_time - 8;
                 let days = $("tbody tr").eq(index);
                 days.find("td").each(function(){
-                    if(this.children[0] != null && this.children[0].innerHTML == response[i].Date) { 
+                    if(this.children[0] != null && this.children[0].innerHTML == response[i].date) { 
                         this.children[1].innerHTML = `
                             <span>${response[i].user_name}</span><br>
                             <span class= "span2">${response[i].user_id}</span>
@@ -132,13 +124,13 @@ function updateButtonAct() {
                     event.preventDefault();
                     console.log(pwd);
                     $.ajax({
-                        url: 'add_register.php',
+                        url: '',
                         type: 'POST',
                         data: {
                             'date' : date, 
                             'Start_time': time,
                             'change_pwd': $("#pwd").val(),
-                            'space_id': $("#hidden_id").html(),
+                            'Space_id': $("#hidden_id").html(),
                             'mode': 'delete', 
                         },
                         success: function(response){
@@ -209,7 +201,7 @@ function updateButtonAct() {
                     }
                     else {
                         $.ajax({
-                            url: 'add_register.php',
+                            url: '',
                             type: 'POST',
                             data: {
                                 'Space_id':Space_id,

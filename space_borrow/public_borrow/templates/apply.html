@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        {% csrf_token %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>宿舍公共空間借用系統</title>
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href='{% static "css/styles.css" %}' rel="stylesheet" />
+        <link href='{% static "css/apply.css" %}' rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <!-- Bootstrap core JS-->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+        <!-- Core theme JS-->
+        <script src='{% static "js/apply.js" %}'></script>
+        <script src='{% static "js/change_select.js" %}'></script>
+        <script src=' {% static "plugin/jspanel-4.16.1/dist/jspanel.min.js" %}'></script>
+        <link href='{% static "plugin/jspanel-4.16.1/dist/jspanel.min.css" %}' rel="stylesheet">
+        <script src='{% static "plugin/jspanel-4.16.1/dist/extensions/modal/jspanel.modal.min.js" %}'></script>
+    </head>
+    <main>
+        {% include "navbar.html"%}
+        <div class="text-center mt-5 mb-4">
+            <p class="lead fw-normal text-muted mb-0">借用空間：</p>
+            <select class="wide" id="dropdown">
+                {% for space in region_space %}
+                <option value={{space.id}} {% if space.id|stringformat:"s" == request.GET.space_id %} selected {% endif %}>{{space.space_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="container px-2 py-3 bg-f9f9ff" id="timetable">
+            <table class="table calendar">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">一</th>
+                        <th scope="col">二</th>
+                        <th scope="col">三</th>
+                        <th scope="col">四</th>
+                        <th scope="col">五</th>
+                        <th scope="col">六</th>
+                        <th scope="col">日</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--a row of registration-->
+                    <tr>
+                        <td class="timeText" id= "timetd">
+                        </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                        <td class="registButt position-relative">
+                            <p class="date">一</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">二</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">三</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">四</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">五</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">六</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="registButt position-relative">
+                            <p class="date">日</p>
+                            <a href="#" class="stretched-link">
+                            </a>
+                            <div class="detail"></div>
+                        </td>
+                        <td class="timeText" id= "timetd">
+                        </td>
+                    </tr>
+                    <!--a row of registration-->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <p id="hidden_id" >{{request.GET.space_id}}</p>
+    {% include "footer.html"%}
+</html>

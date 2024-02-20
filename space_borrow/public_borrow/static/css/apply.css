@@ -164,7 +164,3 @@ input{
 #hidden_id {
     display: none;
 }
-
-.mode_change {
-    cursor: pointer;
-}
