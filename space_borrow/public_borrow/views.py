@@ -5,6 +5,7 @@ from django.core import serializers
 from django.db import connection
 from .utility import check_sequence
 from django.views.decorators.csrf import csrf_exempt
+import datetime
 # Create your views here.
 def home(request):
     if 'identity' not in request.session:
@@ -42,7 +43,19 @@ def regist_page(request):
         }
         record['start_time'] = int(record['start_time'].split(':')[0])
         record['signature'] = str(record['start_time']) + str(request.POST.get('Space_id')) + record['date']
-        
+
+        date_to_int = {
+            "一" : 0,
+            "二" : 1,
+            "三" : 2,
+            "四" : 3,
+            "五" : 4,
+            "六" : 5,
+            "日" : 6
+        }
+        now_datetime = datetime.datetime.now()
+        if date_to_int[record['date']] < now_datetime.weekday() or date_to_int[record['date']] == now_datetime.weekday() and record['start_time'] < now_datetime.hour:
+            return HttpResponse("此時段已不可修改")
         if request.POST.get('mode') == "add":
             b_list = BlackList.objects.filter(stu_id__exact=record['user_id']).first()
             if(b_list):
