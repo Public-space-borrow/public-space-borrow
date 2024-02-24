@@ -22,9 +22,9 @@ class Space(models.Model):
         
 class Register(models.Model):
     signature = models.CharField(max_length=255, primary_key=True, null=False, blank=False)
-    start_time = models.IntegerField()  # Field name made lowercase.
+    start_time = models.IntegerField()  
     space = models.ForeignKey(Space, on_delete=models.CASCADE)  # Field name made lowercase. The composite primary key (Space_id, Start_time, Date) found, that is not supported. The first column is selected.
-    date = models.CharField(max_length=20)  # Field name made lowercase.
+    date = models.DateField(null=False, blank=False)
     usable = models.IntegerField()
     user_id = models.CharField(max_length=255, blank=True, null=True)
     user_name = models.CharField(max_length=255, blank=True, null=True)

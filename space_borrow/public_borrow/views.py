@@ -30,6 +30,15 @@ def regist_page(request):
         }
         return render(request, "apply.html", data)
     elif request.method == "POST":
+        date_to_int = {
+            "一" : 0,
+            "二" : 1,
+            "三" : 2,
+            "四" : 3,
+            "五" : 4,
+            "六" : 5,
+            "日" : 6
+        }
         record = {
             'space' : Space.objects.filter(id__exact=request.POST.get('Space_id')).first(),
             'start_time' : request.POST.get('Start_time'),
@@ -42,20 +51,17 @@ def regist_page(request):
             'usable': 1
         }
         record['start_time'] = int(record['start_time'].split(':')[0])
-        record['signature'] = str(record['start_time']) + str(request.POST.get('Space_id')) + record['date']
-
-        date_to_int = {
-            "一" : 0,
-            "二" : 1,
-            "三" : 2,
-            "四" : 3,
-            "五" : 4,
-            "六" : 5,
-            "日" : 6
-        }
+        
         now_datetime = datetime.datetime.now()
-        if date_to_int[record['date']] < now_datetime.weekday() or date_to_int[record['date']] == now_datetime.weekday() and record['start_time'] < now_datetime.hour:
-            return HttpResponse("此時段已不可修改")
+        day_diff = date_to_int[record['date']] - now_datetime.weekday() #預約的是禮拜幾 - 現在禮拜幾 = 相差天數
+        print(day_diff)
+        record['date'] = now_datetime.date() + datetime.timedelta(day_diff)
+
+        if day_diff < 0 or (day_diff == 0 and record['start_time'] < now_datetime.hour):
+            return HttpResponse("此時段已不可被修改")
+        record['signature'] = str(record['start_time']) + str(request.POST.get('Space_id')) + record['date'].strftime("%Y-%m-%d")
+        
+        
         if request.POST.get('mode') == "add":
             b_list = BlackList.objects.filter(stu_id__exact=record['user_id']).first()
             if(b_list):
@@ -70,7 +76,6 @@ def regist_page(request):
             new_record.save()
             return HttpResponse("預約成功\n使用前請至服務站出示學生證以借用鑰匙")
         elif request.POST.get("mode") == "delete":
-            print(record['signature'])
             target_regist = Register.objects.filter(signature=record['signature']).first()
             if(target_regist == None):
                 return HttpResponse("該預約資料已經不存在")
@@ -88,11 +93,13 @@ def get_regist(request):
         space = request.POST.get('id')
         all_regist = Register.objects.filter(space=space).values("start_time", "space_id", "date", "user_id", "user_name", "user_phone", "user_dormnumber")
         all_regist = list(all_regist)
-        if request.session['identity'] == "normal":
-            for record in all_regist:
+        int_to_date = ['一', '二', '三', '四', '五', '六', '日']
+        for record in all_regist:
+            if request.session['identity'] == "normal":
                 record['user_id'] = record['user_id'][:-5] + "XXXXX"
                 record['user_name'] = record['user_name'][0] + "X" + record['user_name'][2:]
                 record['user_phone'] = ""
+            record['date'] = int_to_date[record['date'].weekday()]
         return JsonResponse(all_regist, safe=False)
     else:
         raise Http404("Page not exit")
