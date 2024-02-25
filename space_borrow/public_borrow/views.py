@@ -91,7 +91,9 @@ def regist_page(request):
 def get_regist(request):
     if request.method == "POST":
         space = request.POST.get('id')
-        all_regist = Register.objects.filter(space=space).values("start_time", "space_id", "date", "user_id", "user_name", "user_phone", "user_dormnumber")
+        today = datetime.date.today().isocalendar()
+        week_firstDay = datetime.date.fromisocalendar(today.year, today.week, 1)
+        all_regist = Register.objects.filter(space=space, date__gte=week_firstDay).values("start_time", "space_id", "date", "user_id", "user_name", "user_phone", "user_dormnumber")
         all_regist = list(all_regist)
         int_to_date = ['一', '二', '三', '四', '五', '六', '日']
         for record in all_regist:
