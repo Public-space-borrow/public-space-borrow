@@ -76,9 +76,9 @@ WSGI_APPLICATION = "space_borrow.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "dorm_django",
-        "USER": "dormcenter",
-        "PASSWORD": "59365937",
+        "NAME": "dorm_testingDB",
+        "USER": "web_engineers",
+        "PASSWORD": "WeWillMeetAtNTU",
         "HOST": "140.117.177.166",
         "PORT": "3306",
     }
