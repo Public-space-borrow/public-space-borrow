@@ -22,73 +22,71 @@
             <!-- Navigation-->
             {% include "navbar.html"%}
             <!-- Pricing section-->
-            <section class="bg-light py-5">
-                <div class="container px-5 my-5">
-                    <div class="text-center mb-5">
-                        <h1 class="fw-bolder">請選擇想借用的空間</h1>
-                        <p class="lead fw-normal text-muted mb-0">Choose the area that you want to borrow</p>
+            <div class="container px-5 my-5">
+                <div class="text-center mb-5">
+                    <h1 class="fw-bolder">請選擇想借用的空間</h1>
+                    <p class="lead fw-normal text-muted mb-0">Choose the area that you want to borrow</p>
+                </div>
+                <div class="row gx-5 justify-content-center card_row">
+                    <!-- Yu Shu -->
+                    <div class="col-lg-6 col-xl-4">
+                        <img src='{% static "pic/Yu-Shu.jpeg" %}' alt="雨樹服務站" style="width:100%">
+                        <div class="card mb-5 mb-xl-0">
+                            <div class="card-body p-5">
+                                <ul class="list-unstyled mb-4">
+                                    {% for i in YuShu %}
+                                        <li class="mb-2">
+                                            <a class="nav-link" href="regist?space_id={{i.id}}">
+                                                <i class="bi bi-pin-angle-fill"></i>
+                                                {{i.space_name}}<br>
+                                                <p class="eng_name">{{i.eng_name}}</p>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row gx-5 justify-content-center card_row">
-                        <!-- Yu Shu -->
-                        <div class="col-lg-6 col-xl-4">
-                            <img src='{% static "pic/Yu-Shu.jpeg" %}' alt="雨樹服務站" style="width:100%">
-                            <div class="card mb-5 mb-xl-0">
-                                <div class="card-body p-5">
-                                    <ul class="list-unstyled mb-4">
-                                        {% for i in YuShu %}
-                                            <li class="mb-2">
-                                                <a class="nav-link" href="regist?space_id={{i.id}}">
-                                                    <i class="bi bi-pin-angle-fill"></i>
-                                                    {{i.space_name}}<br>
-                                                    <p class="eng_name">{{i.eng_name}}</p>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
+                    <!-- Wu Ling -->
+                    <div class="col-lg-6 col-xl-4">
+                        <img src='{% static "pic/Wu-Ling.jpeg" %}' alt="武嶺服務站" style="width:100%">
+                        <div class="card mb-5 mb-xl-0">
+                            <div class="card-body p-5">
+                                <ul class="list-unstyled mb-4">
+                                    {% for i in wulin%}
+                                        <li class="mb-2">
+                                            <a class="nav-link" href="regist?space_id={{i.id}}">
+                                                <i class="bi bi-pin-angle-fill"></i>
+                                                {{i.space_name}}<br>
+                                                <p class="eng_name">{{i.eng_name}}</p>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
-                        <!-- Wu Ling -->
-                        <div class="col-lg-6 col-xl-4">
-                            <img src='{% static "pic/Wu-Ling.jpeg" %}' alt="武嶺服務站" style="width:100%">
-                            <div class="card mb-5 mb-xl-0">
-                                <div class="card-body p-5">
-                                    <ul class="list-unstyled mb-4">
-                                        {% for i in wulin%}
-                                            <li class="mb-2">
-                                                <a class="nav-link" href="regist?space_id={{i.id}}">
-                                                    <i class="bi bi-pin-angle-fill"></i>
-                                                    {{i.space_name}}<br>
-                                                    <p class="eng_name">{{i.eng_name}}</p>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Cuei Heng -->
-                        <div class="col-lg-6 col-xl-4">
-                            <img src='{% static "pic/Cuei-Heng.jpeg" %}' alt="翠亨服務站" style="width:100%">
-                            <div class="card mb-5 mb-xl-0">
-                                <div class="card-body p-5">
-                                    <ul class="list-unstyled mb-4">
-                                        {% for i in CueiHeng%}
-                                            <li class="mb-2">
-                                                <a class="nav-link" href="regist?space_id={{i.id}}">
-                                                    <i class="bi bi-pin-angle-fill"></i>
-                                                    {{i.space_name}}<br>
-                                                    <p class="eng_name">{{i.eng_name}}</p>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
+                    </div>
+                    <!-- Cuei Heng -->
+                    <div class="col-lg-6 col-xl-4">
+                        <img src='{% static "pic/Cuei-Heng.jpeg" %}' alt="翠亨服務站" style="width:100%">
+                        <div class="card mb-5 mb-xl-0">
+                            <div class="card-body p-5">
+                                <ul class="list-unstyled mb-4">
+                                    {% for i in CueiHeng%}
+                                        <li class="mb-2">
+                                            <a class="nav-link" href="regist?space_id={{i.id}}">
+                                                <i class="bi bi-pin-angle-fill"></i>
+                                                {{i.space_name}}<br>
+                                                <p class="eng_name">{{i.eng_name}}</p>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
         <!-- Footer-->
         {% include "footer.html" %}
