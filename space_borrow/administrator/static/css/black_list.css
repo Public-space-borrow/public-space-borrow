@@ -1,0 +1,25 @@
+h1#blacklist_title {
+    text-align: center;
+    /* margin-bottom: 2em; */
+}
+
+form#blacklist {
+    text-align: center;
+}
+
+#blacklist_submit {
+    margin-top: 2em;
+}
+
+#main{
+    display: flex;
+    justify-content: center;
+}
+#first{
+    width:400px;
+    height:610px;
+    box-shadow: 0 0 0 1px rgba(14,41,57,0.12), 0 1px 1px rgba(14,41,56,0.44), inset 0 -1px 1px rgba(14,41,57,0.15);
+    float:left;
+    padding:10px 50px 0;
+    background:#ece3d1;
+}

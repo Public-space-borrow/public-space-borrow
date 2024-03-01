@@ -1,0 +1,166 @@
+.calendar {
+    font-size: 1.5vw;
+    text-align: center;
+
+}
+.calendar a{
+    text-decoration: none;
+    color: black;
+}
+
+.calendar td{
+    /* width: 10%; */
+    /* height: 140px; */
+    vertical-align: middle;
+}
+
+.registButt{
+    font-size: smaller;
+}
+.registButt:hover {
+    background-color: gray;
+}
+.used:hover {
+    background-color: gray;
+}
+.timeText {
+    font-size: 0.5em;
+}
+
+@media (max-width: 400px) {
+    .calendar td{
+        width: 45px;
+        height: 45px;
+    }
+    span{
+        font-size: 8px;
+    }
+    .span2{
+        display: none;
+    }
+    #timetd{
+        width:40px;
+        font-size: 5px;
+        padding:0px;
+    }
+    th{
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .calendar td{
+        width: 100px;
+        height: 100px;
+    }
+    span{
+        font-size: 12px;
+    }
+    .span2{
+        display: none;
+    }
+    #timetd{
+        width:60px;
+        font-size: 12px;
+        padding:0px;
+    }
+    th{
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 2500px) {
+    .calendar td{
+        width: 140px;
+        height: 140px;
+        font-size: 16px;
+    }    
+    span{
+        font-size: 16px;
+    }
+    #timetd{
+        width:60px;
+        font-size: 16px;
+    }
+}
+
+.date {
+    display: none;
+}
+.detail {
+    display: none;
+}
+.self{
+    
+}
+label {
+    display: block;
+    margin: 30px 0 0 0;
+    font-size: 2rem;
+}
+
+.panelText{
+    font-size: 2rem;
+}
+.jsPanel-content{
+    text-align: center;
+}
+
+#stu_id,#name,#room,#phone, #pwd, h4{
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    color: #212529;
+}
+
+h4{
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    color: #212529;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submit{
+    color: white;  
+    background: #212529;
+    width: 200px;
+    height: 30px;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0px;
+}
+
+.submit:hover{
+  background:#516464;
+}
+
+input{
+    padding: 5px;
+    border: none; 
+    border:solid 1px #ccc;
+    border-radius: 5px;
+}
+
+.echo{
+    position:relative;   
+    margin: auto;
+    top: 100px;
+    text-align:center;
+}
+
+.go{
+    display: flex;
+    margin-top:-20px;
+}
+
+#container_cancel{
+    text-align: left;
+    padding-left: 50px;
+}
+
+#hidden_id {
+    display: none;
+}
