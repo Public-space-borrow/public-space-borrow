@@ -42,9 +42,10 @@
                 <div class="text-center mt-6 mb-6">
                     <p class="lead fw-normal text-muted mb-0">借用星期：</p>
                     <select class="wide" id="dropdown">
-                        {% for space in region_space %}
-                        <option value={{space.id}} {% if space.id|stringformat:"s" == request.GET.space_id %} selected {% endif %}>{{space.space_name}}</option>
-                        {% endfor %}
+                        <option value="1">這星期</option>
+                        <option value="2">下星期</option>
+                        <option value="3">下下星期</option>
+                        <option value="4">下下下星期</option>
                     </select>
                 </div>
             </div>
