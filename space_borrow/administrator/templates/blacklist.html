@@ -1,57 +1,110 @@
 <!DOCTYPE html>
 {% load static%}
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        {% csrf_token %}
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>宿舍公共空間借用系統</title>
-        
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap i cons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href='{% static "css/styles.css" %}' rel="stylesheet" />
-        <link href = '{% static "css/black_list.css" %}' rel="stylesheet">
-        <!--Jquery core import-->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    </head>
 
+<head>
+    <meta charset="utf-8" />
+    {% csrf_token %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>宿舍公共空間借用系統</title>
+    
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap i cons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href='{% static "css/styles.css" %}' rel="stylesheet" />
+    <link href = '{% static "css/black_list.css" %}' rel="stylesheet">
+    <!--Jquery core import-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
 
 
 <body>
     {% include "navbar.html"%}
     
-    <h1 id="blacklist_title">黑名單</h1>
+    <div id = "blacklist_info" style="margin: 10vh 1vh;">
+        <h1 id="blacklist_title">黑名單</h1>
 
-    <div id="main">
-        <div id="first">
-            <form id="blacklist">
-                <div>
-                    <p>請輸入學號</p>
-                    <input type="text" name="blacklist_stuID"  pattern="[A-Za-z]\d{9}" autofocus required>
-                    <!-- <hr> -->
-                </div>
-                <div>
-                    <p>請選擇封鎖截止日</p>
-                    <input type="date" name="blacklist_date" min="2024-03-01" required>  
-                </div>
-
-                <div>
-                    <p>請輸入封鎖原因</p>
-                    <textarea name="blacklist_reason" rows="10" cols="50"></textarea>
-                </div>
-
-                <div>
-                    <input type="submit" value="Submit" id = "blacklist_submit">
-                </div>
-            </form>
+        <div id="main">
+            <div id="first">
+                <form id="blacklist" action="" method = "post">
+                    <div style="margin-bottom: 5vh;">
+                        <p style="margin-bottom: 1vh;">請輸入學號</p>
+                        <input type="text" name="blacklist_stuID"  autofocus required>
+                        <!-- pattern="[A-Za-z]\d{9}"-->
+                    </div>
+                    <div style="margin-bottom: 5vh;">
+                        <p style="margin-bottom: 1vh;">請選擇封鎖截止日</p>
+                        <input type="date" name="blacklist_date" min="2024-03-01" required>  
+                    </div>
+    
+                    <div style="margin-bottom: 0vh;">
+                        <p style="margin-bottom: 1vh;">請輸入封鎖原因</p>
+                        <textarea name="blacklist_reason" rows="10" cols="50" id = "reason" style="width: 90%"></textarea>
+                    </div>
+    
+                    <div>
+                        <input type="submit" value="Submit" id = "blacklist_submit">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
+
     </body>
 
     {% include "footer.html"%}
 </html>
+
+<script>
+
+    $(document).ready(function(){
+        $("form").on("submit", function(event){
+            event.preventDefault();
+    
+            var StuId= $("input[name='blacklist_stuID']").val();
+            var BlackDate= $("input[name='blacklist_date']").val();
+            var Reason= $("textarea").val();
+
+
+            // alert(Reason)
+            
+            if(StuId.length < 1 || BlackDate.length < 1) {
+                alert("請完整填寫所有欄位");
+            }
+            else if(StuId < 9) {
+                alert("學號格式不正確");
+            }
+            else {
+                $.ajax({
+                    url: "{% url 'black'%}",
+                    type: 'POST', //???
+                    data: {
+                        'banned_reason': Reason,
+                        'stu_id': StuId,
+                        'mode': 'blacklist_information', //???
+                        'expire_time': BlackDate,
+                    },
+                    success: function(response){
+                        alert(response);
+                        // panel.close();
+                        location.reload(true);
+                    },
+                    error: function(response){
+                        alert("輸入失敗");
+                        console.log(response);
+                    }
+                });
+            }
+            // $.post("process_form.php", formValues, function(data){
+            //     // Display the returned data in browser
+            //     $("#result").html(data);
+            // });
+        });
+    });
+
+</script>

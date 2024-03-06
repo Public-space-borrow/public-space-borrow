@@ -15,6 +15,7 @@ form#blacklist {
     display: flex;
     justify-content: center;
 }
+
 #first{
     width:400px;
     height:610px;
@@ -22,4 +23,12 @@ form#blacklist {
     float:left;
     padding:10px 50px 0;
     background:#ece3d1;
+}
+/* 
+#reason {
+    width: 90%; 
+} */
+
+div#blacklist_info {
+    margin: 10vh 1vh;
 }
