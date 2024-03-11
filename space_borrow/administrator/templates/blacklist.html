@@ -143,6 +143,10 @@
                                 <span>{{ i.banned_reason }}</span>
                                 <input type="text" class="edit_reason" required style="display: none;">
                             </td>
+                            <!-- 多新增一個，紀錄原本ID -->
+                            <td class="editable" style="display: none;">
+                                <span class="ori_id">{{ i.stu_id }}</span>
+                            </td>
                             <td>
                                 <button type="button" class="edit" style="display: inline">修改</button>
                                 <button type="button" class="delete" style="display: inline">刪除</button>
@@ -260,6 +264,9 @@
 
             var $row = $(this).closest(".action");
 
+            var original_stuId = $row.find(".ori_id").text().trim();
+            // alert(original_stuId);
+
             var stuId = $row.find(".edit_id").val();
             var expireTime = $row.find(".edit_time").val();
             var bannedReason = $row.find(".edit_reason").val();
@@ -273,6 +280,7 @@
                     'stu_id': stuId,
                     'mode': 'blacklist_edit', //???
                     'expire_time': expireTime,
+                    'original_id': original_stuId,
                 },
                 success: function(response){
                     alert(response);
@@ -308,9 +316,9 @@
 
     $(document).ready(function(){
         $(".delete").on("click", function(event){
-            var stuId = $(this).closest("tr").find("td:first").text();
-            var expireTime = $(this).closest("tr").find("td:nth-child(2)").text();
-            var bannedReason = $(this).closest("tr").find("td:nth-child(3)").text();
+            var stuId = $(this).closest("tr").find("td:first").text().trim();
+            var expireTime = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+            var bannedReason = $(this).closest("tr").find("td:nth-child(3)").text().trim();
 
             // alert("確定刪除這筆資料嗎?\n\n學。號:" + stuId + "\n封鎖到期日: " + expireTime + "\n封鎖原因: " + bannedReason);
 
