@@ -35,6 +35,11 @@ def BlackList_input(request):
             # print(request.POST.get('stu_id'))
             # print(request.POST.get('expire_time'))
             # print(request.POST.get('banned_reason'))
+            
+            if BlackList.objects.filter(stu_id=request.POST.get('stu_id')).exists():
+                # error_message = "該學號已存在於黑名單內"
+                return HttpResponse('該學號已存在於黑名單內')
+            
             input_blacklist = BlackList(stu_id=request.POST.get('stu_id'), expire_time=request.POST.get('expire_time'), banned_reason=request.POST.get('banned_reason'))
             input_blacklist.save()
     

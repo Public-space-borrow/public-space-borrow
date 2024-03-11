@@ -212,7 +212,9 @@
                     success: function(response){
                         alert(response);
                         // panel.close();
-                        location.reload(true);
+
+                        if(response !== "該學號已存在於黑名單內")
+                            location.reload(true);
                     },
                     error: function(response){
                         alert("輸入失敗");
