@@ -11,6 +11,7 @@ from public_borrow.models import BlackList
 import json
 import datetime
 from datetime import date
+from datetime import datetime
 #新加入的function
 @csrf_exempt
 def BlackList_print(request):
@@ -20,8 +21,13 @@ def BlackList_print(request):
 
     time = list(time)
 
+    
+    today = datetime.now().strftime('%Y%m%d')
+    # print(today)
+
     data = {
         "time" : time,
+        "today" : today,
     }
 
     # print(data)    

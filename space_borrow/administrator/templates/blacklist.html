@@ -130,31 +130,33 @@
                         </form>
                     </tr>
                     {% for i in time %}
-                        <tr class="action">
-                            <td class="editable">
-                                <span>{{ i.stu_id }}</span>
-                                <input type="text" class="edit_id" style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.expire_time }}</span>
-                                <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.banned_reason }}</span>
-                                <input type="text" class="edit_reason" required style="display: none;">
-                            </td>
-                            <!-- 多新增一個，紀錄原本ID -->
-                            <td class="editable" style="display: none;">
-                                <span class="ori_id">{{ i.stu_id }}</span>
-                            </td>
-                            <td>
-                                <button type="button" class="edit" style="display: inline">修改</button>
-                                <button type="button" class="delete" style="display: inline">刪除</button>
+                        {% if i.expire_time >= today %}
+                            <tr class="action">
+                                <td class="editable">
+                                    <span>{{ i.stu_id }}</span>
+                                    <input type="text" class="edit_id" style="display: none;">
+                                </td>
+                                <td class="editable">
+                                    <span>{{ i.expire_time }}</span>
+                                    <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
+                                </td>
+                                <td class="editable">
+                                    <span>{{ i.banned_reason }}</span>
+                                    <input type="text" class="edit_reason" required style="display: none;">
+                                </td>
+                                <!-- 多新增一個，紀錄原本ID -->
+                                <td class="editable" style="display: none;">
+                                    <span class="ori_id">{{ i.stu_id }}</span>
+                                </td>
+                                <td>
+                                    <button type="button" class="edit" style="display: inline">修改</button>
+                                    <button type="button" class="delete" style="display: inline">刪除</button>
 
-                                <button type="button" class="save" style="display: none;">儲存</button>
-                                <button type="button" class="cancel" style="display: none;">取消</button>                                
-                            </td>
-                        </tr>
+                                    <button type="button" class="save" style="display: none;">儲存</button>
+                                    <button type="button" class="cancel" style="display: none;">取消</button>                                
+                                </td>
+                            </tr>
+                            {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -166,6 +168,11 @@
     {% include "footer.html" %}
 </body>
 <script>
+    $(document).ready(function() {
+        var today = new Date().toISOString().split('T')[0];
+        $('#input_time').attr('min', today);
+    });
+
     $(document).ready(function () {
         $.ajax({
             url: "{% url 'black_print' %}",
