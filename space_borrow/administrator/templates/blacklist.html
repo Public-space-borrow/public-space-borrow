@@ -19,6 +19,8 @@
     <!--Jquery core import-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
 </head>
 
 <style>
@@ -114,19 +116,31 @@
     
     <!-- search the black list -->
     <div id="search_time">
+        
         <h1 style="text-align: center; margin-top: 5vh;">黑名單</h1>
+
         <!-- <button id="time" style="text-align: center;">以時間查詢黑名單</button> -->
 
         <div class="BL_table">
             <table>
-                <thead><th>學號</th><th>封鎖截止日</th><th>封鎖原因</th><th>功能</th></thead>
+                <thead>
+                    <th>學號</th>
+                    <th>封鎖原因</th> 
+                    <th>封鎖截止日 <span style="color: black;">&#129033;</span><span style="color: black; display: none;">&#129035;</span></th>
+                    <!-- <div class="ui-icon ui-icon-arrowthick-1-n"></div><div class="ui-icon ui-icon-arrowthick-1-s" style="display: none;"></div> &#129033;</span><span style="color: black;">&#129153;</span>-->
+                    <th>功能</th>
+                </thead>
                 <tbody>
                     <tr id="input_BL">
                         <form id="input_blacklist" action="" method = "post">
                             <td><input type="text" name="input_id" id="input_id" placeholder="學號" required></td>
-                            <td><input type="date" name="input_time" id="input_time" placeholder="封鎖截止日" min="2024-03-01" required></td>
                             <td><input type="text" name="input_reason" id="input_reason" placeholder="封鎖原因" required></td>
-                            <td><input type="submit" value="新增" id="add"></td>
+                            <td><input type="date" name="input_time" id="input_time" placeholder="封鎖截止日" min="2024-03-01" required></td>
+                            <td>
+                                <input type="submit" value="新增" id="add">
+                                
+                                
+                            </td>
                         </form>
                     </tr>
                     {% for i in time %}
@@ -137,12 +151,12 @@
                                     <input type="text" class="edit_id" style="display: none;">
                                 </td>
                                 <td class="editable">
-                                    <span>{{ i.expire_time }}</span>
-                                    <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                                </td>
-                                <td class="editable">
                                     <span>{{ i.banned_reason }}</span>
                                     <input type="text" class="edit_reason" required style="display: none;">
+                                </td>
+                                <td class="editable">
+                                    <span>{{ i.expire_time }}</span>
+                                    <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
                                 </td>
                                 <!-- 多新增一個，紀錄原本ID -->
                                 <td class="editable" style="display: none;">
