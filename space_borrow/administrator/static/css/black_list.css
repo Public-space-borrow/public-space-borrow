@@ -32,3 +32,93 @@ form#blacklist {
 div#blacklist_info {
     margin: 10vh 1vh;
 }
+
+
+
+
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 75%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+thead tr {
+    background-color: #958055;
+    color: #ffffff;
+    text-align: left;
+}
+th, td {
+    padding: 12px 15px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #ebe6e6;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid #a98842;
+}
+tbody tr.active-row {
+    font-weight: bold;
+    color: #a98842;
+}
+
+.BL_table {
+    display: flex;
+    justify-content: center;
+}
+
+.edit {
+    background-color: #6a9de5;
+    color: #ffffff;
+    border: #6a9de5 solid;
+}
+
+.cancel {
+    background-color: #7b7c7d;
+    color: #ffffff;
+    border: #7b7c7d solid;
+}
+
+.save {
+    background-color: #c39e6b;
+    color: #ffffff;
+    border: #c39e6b solid;
+}
+
+/* #c39e6b */
+
+.delete {
+    background-color: #ff5252;
+    color: #ffffff;
+    border: #ff5252 solid;
+}
+
+.editable input, #input_BL td input{
+    width: 90%;
+}
+
+#add{
+    background-color: #93bb65;
+    color: #ffffff;
+    border: #93bb65 solid;
+    width: auto !important;
+}
+
+@media (max-width: 376px) {
+    .BL_table{
+        overflow-x: auto;
+        width: 100%;
+        font-size: 3vw;
+    }
+    th, td {
+        padding: 1vw 1.3vw;
+        width: 0vw;
+    }
+}

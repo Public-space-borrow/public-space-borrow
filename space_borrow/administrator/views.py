@@ -1,34 +1,22 @@
-from django.shortcuts import render, redirect
-from django.core.serializers import serialize
+from django.shortcuts import render
 from .models import *
 from django.http import Http404, JsonResponse, HttpResponse
-from django.core import serializers
-from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
-from django.db import models
 from public_borrow.models import BlackList
-# from app import model
-import json
+
 import datetime
 from datetime import date
 from datetime import datetime
-#新加入的function
-
 @csrf_exempt
 def AdminModel_print(request):
     return render(request, "AdminModel.html")
 
 @csrf_exempt
 def BlackList_print(request):
-
+    today = datetime.now().date()
     if request.method == "GET":
-        time = BlackList.objects.all().order_by('expire_time').extra(select={'expire_time': "DATE_FORMAT(expire_time, '%%Y%%m%%d')"}).values('stu_id', 'expire_time', 'banned_reason') #.values_list(flat=True)
-
-    time = list(time)
-
+        time = BlackList.objects.filter(expire_time__gte=today).order_by('expire_time').extra(select={'expire_time': "DATE_FORMAT(expire_time, '%%Y-%%m-%%d')"}).values('stu_id', 'expire_time', 'banned_reason') #.values_list(flat=True)
     
-    today = datetime.now().strftime('%Y%m%d')
-
     data = {
         "time" : time,
         "today" : today,

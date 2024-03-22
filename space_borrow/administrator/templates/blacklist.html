@@ -22,95 +22,6 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 
 </head>
-
-<style>
-    table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        min-width: 75%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-    thead tr {
-        background-color: #958055;
-        color: #ffffff;
-        text-align: left;
-    }
-    th, td {
-        padding: 12px 15px;
-    }
-
-    tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-
-    tbody tr:nth-of-type(even) {
-        background-color: #ebe6e6;
-    }
-
-    tbody tr:last-of-type {
-        border-bottom: 2px solid #a98842;
-    }
-    tbody tr.active-row {
-        font-weight: bold;
-        color: #a98842;
-    }
-
-    .BL_table {
-        display: flex;
-        justify-content: center;
-    }
-
-    .edit {
-        background-color: #6a9de5;
-        color: #ffffff;
-        border: #6a9de5 solid;
-    }
-
-    .cancel {
-        background-color: #7b7c7d;
-        color: #ffffff;
-        border: #7b7c7d solid;
-    }
-
-    .save {
-        background-color: #c39e6b;
-        color: #ffffff;
-        border: #c39e6b solid;
-    }
-
-    /* #c39e6b */
-
-    .delete {
-        background-color: #ff5252;
-        color: #ffffff;
-        border: #ff5252 solid;
-    }
-
-    .editable input, #input_BL td input{
-        width: 90%;
-    }
-
-    #add{
-        background-color: #93bb65;
-        color: #ffffff;
-        border: #93bb65 solid;
-        width: auto !important;
-    }
-
-    @media (max-width: 376px) {
-        .BL_table{
-            overflow-x: auto;
-            width: 100%;
-            font-size: 3vw;
-        }
-        th, td {
-            padding: 1vw 1.3vw;
-            width: 0vw;
-        }
-    }
-</style>
 <body>
     {% include "navbar.html"%}
     
@@ -144,33 +55,31 @@
                         </form>
                     </tr>
                     {% for i in time %}
-                        {% if i.expire_time >= today %}
-                            <tr class="action">
-                                <td class="editable">
-                                    <span>{{ i.stu_id }}</span>
-                                    <input type="text" class="edit_id" style="display: none;">
-                                </td>
-                                <td class="editable">
-                                    <span>{{ i.banned_reason }}</span>
-                                    <input type="text" class="edit_reason" required style="display: none;">
-                                </td>
-                                <td class="editable">
-                                    <span>{{ i.expire_time }}</span>
-                                    <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                                </td>
-                                <!-- 多新增一個，紀錄原本ID -->
-                                <td class="editable" style="display: none;">
-                                    <span class="ori_id">{{ i.stu_id }}</span>
-                                </td>
-                                <td>
-                                    <button type="button" class="edit" style="display: inline">修改</button>
-                                    <button type="button" class="delete" style="display: inline">刪除</button>
+                        <tr class="action">
+                            <td class="editable">
+                                <span>{{ i.stu_id }}</span>
+                                <input type="text" class="edit_id" style="display: none;">
+                            </td>
+                            <td class="editable">
+                                <span>{{ i.banned_reason }}</span>
+                                <input type="text" class="edit_reason" required style="display: none;">
+                            </td>
+                            <td class="editable">
+                                <span>{{ i.expire_time }}</span>
+                                <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
+                            </td>
+                            <!-- 多新增一個，紀錄原本ID -->
+                            <td class="editable" style="display: none;">
+                                <span class="ori_id">{{ i.stu_id }}</span>
+                            </td>
+                            <td>
+                                <button type="button" class="edit" style="display: inline">修改</button>
+                                <button type="button" class="delete" style="display: inline">刪除</button>
 
-                                    <button type="button" class="save" style="display: none;">儲存</button>
-                                    <button type="button" class="cancel" style="display: none;">取消</button>                                
-                                </td>
-                            </tr>
-                            {% endif %}
+                                <button type="button" class="save" style="display: none;">儲存</button>
+                                <button type="button" class="cancel" style="display: none;">取消</button>                                
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -179,40 +88,16 @@
     </div>
 
 
-    {% include "footer.html" %}
+{% include "footer.html" %}
 </body>
 <script>
     $(document).ready(function() {
+        //確定今日日期，防止解鎖日期填寫比當前日期前面
         var today = new Date().toISOString().split('T')[0];
         $('#input_time').attr('min', today);
-    });
-
-    $(document).ready(function () {
-        $.ajax({
-            url: "{% url 'black_print' %}",
-            type: 'GET',
-            // dataType: 'json',
-            success: function (data) {
-                // console.log('Data:', data);
-                // // 将数据插入到页面中
-                // Object.values(data).forEach(function (item) {
-                //     console.log('ID:', item.stu_id);
-                //     console.log('Expire Time:', item.expire_time);
-                //     console.log('Reason:', item.banned_reason);
-                // });
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
-
-    $(document).ready(function(){
+        //insert blackList之ajax
         $("form").on("submit", function(event){
             event.preventDefault();
-
-            // var $th = $(this).closest("#input_blacklist");
-
             var StuId= $("input[name='input_id']").val();
             var BlackDate= $("input[name='input_time']").val();
             var Reason= $("input[name='input_reason']").val();
@@ -223,17 +108,14 @@
             else {
                 $.ajax({
                     url: "{% url 'black_input'%}",
-                    type: 'POST', //???
+                    type: 'POST', 
                     data: {
                         'banned_reason': Reason,
                         'stu_id': StuId,
-                        'mode': 'blacklist_input', //???
                         'expire_time': BlackDate,
                     },
                     success: function(response){
                         alert(response);
-                        // panel.close();
-
                         if(response !== "該學號已存在於黑名單內")
                             location.reload(true);
                     },
@@ -244,9 +126,8 @@
                 });
             }
         });
-    });
 
-    $(document).ready(function(){
+        //edit blackList之ajax
         $(".edit").on("click", function(event){
             var $row = $(this).closest(".action");
 
@@ -279,35 +160,29 @@
             $row.find(".edit_time").val(formattedExpireTime);
             // alert(formattedExpireTime);
         });
-    });
-
-    $(document).ready(function(){
+        //save按鈕之行為
         $(".save").on("click", function(event){
             event.preventDefault();
 
             var $row = $(this).closest(".action");
 
             var original_stuId = $row.find(".ori_id").text().trim();
-            // alert(original_stuId);
 
             var stuId = $row.find(".edit_id").val();
             var expireTime = $row.find(".edit_time").val();
             var bannedReason = $row.find(".edit_reason").val();
-            // alert(stuId + expireTime +bannedReason);
 
             $.ajax({
                 url: "{% url 'black_edit'%}",
-                type: 'POST', //???
+                type: 'POST', 
                 data: {
                     'banned_reason': bannedReason,
                     'stu_id': stuId,
-                    'mode': 'blacklist_edit', //???
                     'expire_time': expireTime,
                     'original_id': original_stuId,
                 },
                 success: function(response){
                     alert(response);
-                    // panel.close();
                     location.reload(true);
                 },
                 error: function(response){
@@ -316,9 +191,7 @@
                 }
             });
         });
-    });
-    
-    $(document).ready(function(){
+        //取消按鈕之動作
         $(".cancel").on("click", function(event){
             var $row = $(this).closest(".action");
 
@@ -335,26 +208,20 @@
                 $(this).css("display", "none");
             });
         });
-    });
 
-    $(document).ready(function(){
+        //刪除紀錄之ajax
         $(".delete").on("click", function(event){
             var stuId = $(this).closest("tr").find("td:first").text().trim();
             var expireTime = $(this).closest("tr").find("td:nth-child(2)").text().trim();
             var bannedReason = $(this).closest("tr").find("td:nth-child(3)").text().trim();
-
-            // alert("確定刪除這筆資料嗎?\n\n學。號:" + stuId + "\n封鎖到期日: " + expireTime + "\n封鎖原因: " + bannedReason);
-
             var result = confirm("確定刪除這筆資料嗎?\n\n學號:" + stuId + "\n封鎖到期日: " + expireTime + "\n封鎖原因: " + bannedReason);
 
             if (result) {
-                // alert("111");
                 $.ajax({
                         url: "{% url 'black_delete'%}",
-                        type: 'POST', //???
+                        type: 'POST',
                         data: {
                             'stu_id': stuId,
-                            'mode': 'blacklist_delete', //???
                         },
                         success: function(response){
                             alert(response);
@@ -367,10 +234,6 @@
                         }
                 });
             }
-            // else{
-            //     alert("000");
-            // }
-
         });
     });
 </script>
