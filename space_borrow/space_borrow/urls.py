@@ -24,6 +24,7 @@ urlpatterns = [
     path("regist", views.regist_page),
     path("request_regist", views.get_regist),
     path("private_mode", views.admin_mode, name="private"),
+    path("AdminModel", administrator_views.AdminModel_print, name="AdminModel"),
     path("blackList", administrator_views.BlackList_print, name="black_print"),
     path("blackList_mode", administrator_views.BlackList_input, name="black_input"),
     path("BlackList_delete", administrator_views.BlackList_delete, name="black_delete"),

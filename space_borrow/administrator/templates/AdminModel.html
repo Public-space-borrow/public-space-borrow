@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        {% csrf_token %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>宿舍公共空間借用系統</title>
+        
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap i cons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href='{% static "css/styles.css" %}' rel="stylesheet" />
+        <!-- <link href = '{% static "css/black_list.css" %}' rel="stylesheet"> -->
+        <!--Jquery core import-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    </head>
+
+    <style>
+        .sidebar {
+            position: fixed;
+            /* left: -250px; */
+            width: 20%;
+            height: 100%;
+            background: #000000; /*#063146*/
+        /* transition: all .5s ease; */
+        }
+        .sidebar header{
+            /* font-size: 22px; */
+            color: white;
+            line-height: 70px;
+            text-align: center;
+            background: #326076; /*607D8B*/
+            user-select: none;
+        }
+
+        .bar_header {
+            text-decoration: none;
+
+        }
+
+        .sidebar ul li{
+            color: white;
+        }
+        .sidebar ul a{
+            text-decoration: none;
+            display: block;
+            height: 100%;
+            width: 100%;
+            line-height: 65px;
+            font-size: 20px;
+            color: white;
+            padding-left: 40px;
+            box-sizing: border-box;
+            border-bottom: 1px solid black;
+            border-top: 1px solid rgba(255,255,255,.1);
+            transition: .4s;
+        }
+        /* .sidebar li a {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            border-radius: 12px;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            background: #11101d;
+        } */
+        ul li:hover a{
+            /* margin: 1vw;  */
+            background-color: rgba(255, 255, 255);
+            color: black;
+        }
+        .sidebar li {
+            position: relative;
+            /* margin: 8px 0; */
+            list-style: none;
+        }
+        .sidebar ul {
+            padding: 0;
+            margin: 0;
+        }
+        
+    </style>
+
+    <body>
+
+        <div class="sidebar">
+            <a href="{% url 'home'%}" class="bar_header">
+                <header>
+                    宿舍公共空間借用系統
+                </header>
+            </a>
+            <ul>
+                <li><a href="{% url 'black_print'%}">學生資料</a></li>
+            </ul>
+            <ul>
+                <li><a href="{% url 'black_print'%}">黑名單</a></li>
+            </ul>
+        </div>
+
+        <!-- {% include "footer.html" %} -->
+    </body>
+
+    <script>
+
+    </script>
+
+</html>
