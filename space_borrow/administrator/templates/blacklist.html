@@ -37,7 +37,8 @@
                 <thead>
                     <th>學號</th>
                     <th>封鎖原因</th> 
-                    <th>封鎖截止日 <span style="color: black;">&#129033;</span><span style="color: black; display: none;">&#129035;</span></th>
+                    <th>封鎖截止日 <span style="color: black;">&#10606;</span><span style="color: black; display: none;">&#129035;</span></th>
+                    <th>建立日期</th>
                     <!-- <div class="ui-icon ui-icon-arrowthick-1-n"></div><div class="ui-icon ui-icon-arrowthick-1-s" style="display: none;"></div> &#129033;</span><span style="color: black;">&#129153;</span>-->
                     <th>功能</th>
                 </thead>
@@ -47,11 +48,9 @@
                             <td><input type="text" name="input_id" id="input_id" placeholder="學號" required></td>
                             <td><input type="text" name="input_reason" id="input_reason" placeholder="封鎖原因" required></td>
                             <td><input type="date" name="input_time" id="input_time" placeholder="封鎖截止日" min="2024-03-01" required></td>
-                            <td>
-                                <input type="submit" value="新增" id="add">
-                                
-                                
-                            </td>
+                            <td><span id="crea_date"></span></td>
+                            <td><input type="submit" value="新增" id="add"></td>
+                            
                         </form>
                     </tr>
                     {% for i in time %}
@@ -71,6 +70,9 @@
                             <!-- 多新增一個，紀錄原本ID -->
                             <td class="editable" style="display: none;">
                                 <span class="ori_id">{{ i.stu_id }}</span>
+                            </td>
+                            <td>
+                                <span>{{ i.creation_date}}</span>
                             </td>
                             <td>
                                 <button type="button" class="edit" style="display: inline">修改</button>
@@ -95,6 +97,7 @@
         //確定今日日期，防止解鎖日期填寫比當前日期前面
         var today = new Date().toISOString().split('T')[0];
         $('#input_time').attr('min', today);
+        $('#crea_date').text(today);
         //insert blackList之ajax
         $("form").on("submit", function(event){
             event.preventDefault();
@@ -107,12 +110,14 @@
             }
             else {
                 $.ajax({
-                    url: "{% url 'black_input'%}",
+                    url: "{% url 'black_print'%}",
                     type: 'POST', 
                     data: {
                         'banned_reason': Reason,
                         'stu_id': StuId,
                         'expire_time': BlackDate,
+                        'creation_date': today,
+                        "mode": "blacklist_input",
                     },
                     success: function(response){
                         alert(response);
@@ -127,7 +132,7 @@
             }
         });
 
-        //edit blackList之ajax
+        //edit blackList
         $(".edit").on("click", function(event){
             var $row = $(this).closest(".action");
 
@@ -138,8 +143,8 @@
 
 
             var stuId = $(this).closest("tr").find("td:first").text().trim();
-            var expireTime = $(this).closest("tr").find("td:nth-child(2)").text().trim();
-            var bannedReason = $(this).closest("tr").find("td:nth-child(3)").text().trim();   
+            var bannedReason = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+            var expireTime = $(this).closest("tr").find("td:nth-child(3)").text().trim();   
             // editable
             // alert(stuId + expireTime +bannedReason);
 
@@ -160,6 +165,7 @@
             $row.find(".edit_time").val(formattedExpireTime);
             // alert(formattedExpireTime);
         });
+
         //save按鈕之行為
         $(".save").on("click", function(event){
             event.preventDefault();
@@ -173,13 +179,14 @@
             var bannedReason = $row.find(".edit_reason").val();
 
             $.ajax({
-                url: "{% url 'black_edit'%}",
+                url: "{% url 'black_print'%}",
                 type: 'POST', 
                 data: {
                     'banned_reason': bannedReason,
                     'stu_id': stuId,
                     'expire_time': expireTime,
                     'original_id': original_stuId,
+                    'mode' : 'blacklist_edit',
                 },
                 success: function(response){
                     alert(response);
@@ -218,10 +225,11 @@
 
             if (result) {
                 $.ajax({
-                        url: "{% url 'black_delete'%}",
+                        url: "{% url 'black_print'%}",
                         type: 'POST',
                         data: {
                             'stu_id': stuId,
+                            'mode' : 'blacklist_delete',
                         },
                         success: function(response){
                             alert(response);

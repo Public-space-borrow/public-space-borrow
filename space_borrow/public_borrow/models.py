@@ -43,6 +43,7 @@ class BlackList(models.Model):
     stu_id = models.CharField(primary_key=True, max_length=20)
     expire_time = models.DateField(blank=True, null=True)
     banned_reason = models.CharField(max_length=20, blank=True, null=True)
+    creation_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = True
