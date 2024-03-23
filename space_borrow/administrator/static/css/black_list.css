@@ -1,3 +1,11 @@
+.material-symbols-outlined {
+    font-size: 16px !important;
+    color: black !important;
+    line-height: 0 !important;
+    margin-inline: 5px;
+}
+
+
 h1#blacklist_title {
     text-align: center;
     /* margin-bottom: 2em; */
