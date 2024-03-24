@@ -1,0 +1,131 @@
+{% load static %}
+<html>
+    <header>
+        <meta charset="utf-8" />
+        <!-- Core theme JS-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src=' {% static "plugin/jspanel-4.16.1/dist/jspanel.min.js" %}'></script>
+        <link href='{% static "plugin/jspanel-4.16.1/dist/jspanel.min.css" %}' rel="stylesheet">
+        <script src='{% static "plugin/jspanel-4.16.1/dist/extensions/modal/jspanel.modal.min.js" %}'></script>
+    </header>
+    <body>
+        <button id="open">
+            open panel
+        </button>
+    </body>
+    <style>
+
+    #panel_title{    
+        font-weight: lighter;
+        overflow: hidden;
+        border-image: linear-gradient(to right, #efdbc8 0%, #e8710a 75%) 1;
+        
+        padding: 10px 24px 9px;
+        margin: 0px 0px 1px;
+        border-top: 5px solid ;
+    }
+    #container1 {
+        border-top: 1px solid #dadada;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+    }
+    #panel_footer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-top: 1px solid #dadada;
+        height: 75px;
+        padding: 8px 25px;
+        justify-content: space-between;
+    }
+
+    .comfirm {
+        height: 50%;
+        width: 100px;
+        background: #e29149 75%;
+    }
+
+    .cancel {
+        height: 50%;
+        width: 100px;
+        
+    }
+    .side_bar {
+        border-right: 1px solid #dadada;
+        margin: 0;
+        list-style-type: none;
+        padding: 0;
+    }
+    .bar_item {
+        font-size: 15px;
+        text-align: center;
+        padding: 15px 25px;
+    }
+    .bar_item:hover {
+        box-shadow:0 0 10px #f7d4b1;
+        cursor: pointer;
+    }
+    .selected_item {
+        font-weight: bolder;
+        background-color: #dadada;
+    }
+    </style>
+    <body>
+        <div class="main_content" id="1">
+
+        </div>
+    </body>
+    <script>
+        function change_content() {
+            let all_item =$(".bar_item");
+            
+            for(let i = 0; i < all_item.length; ++i) {
+                if(all_item.eq(i).hasClass("selected_item")) {
+                    console.log(i);
+                    break;
+                }
+            }
+        }
+        $("#open").unbind().click(function(){
+            var panel =jsPanel.modal.create({
+                theme: 'dark',
+                panelSize: {
+                    width: () => { return Math.min(900, window.innerWidth*0.9);},
+                    height: () => { return Math.min(600, window.innerHeight*0.7);}
+                },
+                position: 'center 0 0',
+                header: false,
+                content: `
+                <h2 id="panel_title" >批量獲取學生資訊</h2>
+                <div id="container1">
+                    <ul class="side_bar">
+                        <li class="bar_item selected_item">依照學號查詢</li>
+                        <li class="bar_item">住宿生資料匯出</li>
+                    </ul>
+                </div>
+                <div id="panel_footer">
+                    <button type="button" class="comfirm ui-button ui-widget ui-corner-all" style="display: inline">確認</button>
+                    <button type="button" class="cancel ui-button ui-widget ui-corner-all" style="display: inline">取消</button>
+                </div>
+                `,
+                callback: function() {
+                    let title_height = $("#panel_title").outerHeight();
+                    let panel_total_size = $(".jsPanel-content").outerHeight();
+                    let footer_size = $("#panel_footer").outerHeight();
+                    $("#container1").css("height", panel_total_size - title_height - footer_size - 5);
+                    $(".cancel").unbind().click(function(event) {
+                        panel.close();
+                    });
+                    $(".bar_item").unbind().click(function(event) {
+                        $(".selected_item").removeClass("selected_item");
+                        $(this).addClass("selected_item");
+                        change_content();
+                    })
+
+                },
+            })
+        })
+    </script>
+</html>

@@ -29,5 +29,5 @@ urlpatterns = [
     path("blackList_mode", administrator_views.BlackList_input, name="black_input"),
     path("BlackList_delete", administrator_views.BlackList_delete, name="black_delete"),
     path("BlackList_edit", administrator_views.BlackList_edit, name="black_edit"),
-    # path("black_mode", administrator_views.BlackList_infor),
+    path("stu_info", administrator_views.stu_info, name="std_info"),
 ]
