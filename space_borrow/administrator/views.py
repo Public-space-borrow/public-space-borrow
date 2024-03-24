@@ -7,6 +7,7 @@ from public_borrow.models import BlackList
 import datetime
 from datetime import date
 from datetime import datetime
+from .forms import StudentID
 @csrf_exempt
 def AdminModel_print(request):
     return render(request, "AdminModel.html")
@@ -69,6 +70,7 @@ def BlackList_edit(request):
 
 def stu_info(request):
     if request.session['identity'] == "private":
-        return render(request, "get_info.html")
+        
+        return render(request, "get_info.html", {"form":StudentID})
     else:
         raise Http404("Page not exit")

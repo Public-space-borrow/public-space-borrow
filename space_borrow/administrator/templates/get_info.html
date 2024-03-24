@@ -8,83 +8,38 @@
         <script src=' {% static "plugin/jspanel-4.16.1/dist/jspanel.min.js" %}'></script>
         <link href='{% static "plugin/jspanel-4.16.1/dist/jspanel.min.css" %}' rel="stylesheet">
         <script src='{% static "plugin/jspanel-4.16.1/dist/extensions/modal/jspanel.modal.min.js" %}'></script>
+        <link href="{% static 'css/get_info.css'%}" rel="stylesheet">
+        <link href="{% static 'plugin/bootstrap-5.2.3-dist/css/bootstrap.css'%}" rel="stylesheet">
+        <script src="{% static 'plugin/bootstrap-5.2.3-dist/js/bootstrap.min.js'%}"></script>
     </header>
     <body>
         <button id="open">
             open panel
         </button>
     </body>
-    <style>
-
-    #panel_title{    
-        font-weight: lighter;
-        overflow: hidden;
-        border-image: linear-gradient(to right, #efdbc8 0%, #e8710a 75%) 1;
-        
-        padding: 10px 24px 9px;
-        margin: 0px 0px 1px;
-        border-top: 5px solid ;
-    }
-    #container1 {
-        border-top: 1px solid #dadada;
-        display: flex;
-        flex-direction: row;
-        overflow: hidden;
-    }
-    #panel_footer {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-top: 1px solid #dadada;
-        height: 75px;
-        padding: 8px 25px;
-        justify-content: space-between;
-    }
-
-    .comfirm {
-        height: 50%;
-        width: 100px;
-        background: #e29149 75%;
-    }
-
-    .cancel {
-        height: 50%;
-        width: 100px;
-        
-    }
-    .side_bar {
-        border-right: 1px solid #dadada;
-        margin: 0;
-        list-style-type: none;
-        padding: 0;
-    }
-    .bar_item {
-        font-size: 15px;
-        text-align: center;
-        padding: 15px 25px;
-    }
-    .bar_item:hover {
-        box-shadow:0 0 10px #f7d4b1;
-        cursor: pointer;
-    }
-    .selected_item {
-        font-weight: bolder;
-        background-color: #dadada;
-    }
-    </style>
     <body>
-        <div class="main_content" id="1">
-
+        <div class="hidden">
+            <form>
+                {% csrf_token %}
+                <h4>請輸入學生學號(用逗號或是換行間隔):</h2>
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="請輸入學生學號" id="stu_id" rows="15"></textarea>
+                    <label for="stu_id">請輸入學生學號</label>
+                </div>
+            </form>
+        </div>
+        <div class="hidden">
+            <h4>功能開發中...</h2>
         </div>
     </body>
     <script>
         function change_content() {
+            let forms = $(".hidden");
             let all_item =$(".bar_item");
-            
             for(let i = 0; i < all_item.length; ++i) {
                 if(all_item.eq(i).hasClass("selected_item")) {
-                    console.log(i);
-                    break;
+                    $(".main_content").html(forms[i].innerHTML);
+                    return;
                 }
             }
         }
@@ -104,6 +59,9 @@
                         <li class="bar_item selected_item">依照學號查詢</li>
                         <li class="bar_item">住宿生資料匯出</li>
                     </ul>
+                    <div class="main_content">
+                        
+                    </div>
                 </div>
                 <div id="panel_footer">
                     <button type="button" class="comfirm ui-button ui-widget ui-corner-all" style="display: inline">確認</button>
@@ -123,9 +81,25 @@
                         $(this).addClass("selected_item");
                         change_content();
                     })
-
+                    change_content();
                 },
             })
+            
+
         })
+       $(document).ready(function(){
+            var $textarea = $('#stu_id');
+            var $label = $('.textarea-label');
+            $textarea.on('focus', function() {
+                $label.addClass('active');
+            });
+
+            $textarea.on('blur', function() {
+                if ($textarea.val() === '') {
+                    $label.removeClass('active');
+                }
+            });
+       });
     </script>
+    
 </html>
