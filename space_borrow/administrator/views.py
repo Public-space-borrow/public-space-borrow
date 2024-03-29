@@ -70,14 +70,12 @@ def BlackList_edit(request):
 
 def stu_info(request):
     if request.session['identity'] == "private":
-        if request.method == "GET":
-            return render(request, "get_info.html")
-        elif request.method == "POST":
+        if request.method == "POST":
             form = StudentID(request.POST)
             if form.is_valid():
                 ids = form.cleaned_data['ids']
             
-            return HttpResponse(ids)
+            return render(request, "show_StudentInfo.html", {"ids":ids})
     else:
         raise Http404("Page not exit")
     

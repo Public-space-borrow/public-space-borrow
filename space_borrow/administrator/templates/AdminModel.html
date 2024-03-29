@@ -99,7 +99,7 @@
                 </header>
             </a>
             <ul>
-                <li><a href="{% url 'black_print'%}">學生資料</a></li>
+                <li><a href="" id="open">學生資料</a></li>
             </ul>
             <ul>
                 <li><a href="{% url 'black_print'%}">黑名單</a></li>
@@ -109,12 +109,7 @@
         <div class="topbar">
             <p>This is a test.</p>
         </div>
-
-        <!-- {% include "footer.html" %} -->
     </body>
-
-    <script>
-
-    </script>
+    {% include "get_StudentInfo_panel.html"%}
 
 </html>

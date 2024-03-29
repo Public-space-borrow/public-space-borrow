@@ -13,11 +13,6 @@
         <script src="{% static 'plugin/bootstrap-5.2.3-dist/js/bootstrap.min.js'%}"></script>
     </header>
     <body>
-        <button id="open">
-            open panel
-        </button>
-    </body>
-    <body>
         <div class="hidden">
             <form action="" method="post">
                 {% csrf_token %}
@@ -43,7 +38,8 @@
                 }
             }
         }
-        $("#open").unbind().click(function(){
+        $("#open").unbind(event).click(function(){
+            event.preventDefault();
             var panel =jsPanel.modal.create({
                 theme: 'dark',
                 panelSize: {
