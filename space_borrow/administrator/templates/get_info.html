@@ -19,11 +19,11 @@
     </body>
     <body>
         <div class="hidden">
-            <form>
+            <form action="" method="post">
                 {% csrf_token %}
                 <h4>請輸入學生學號(用逗號或是換行間隔):</h2>
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="請輸入學生學號" id="stu_id" rows="15"></textarea>
+                    <textarea class="form-control" placeholder="請輸入學生學號" id="stu_id" rows="15" name="ids"></textarea>
                     <label for="stu_id">請輸入學生學號</label>
                 </div>
             </form>
@@ -76,6 +76,10 @@
                     $(".cancel").unbind().click(function(event) {
                         panel.close();
                     });
+                    $(".comfirm").unbind().click(function(event) {
+                        console.log($(".main_content > form").html());
+                        $(".main_content > form").submit();
+                    });
                     $(".bar_item").unbind().click(function(event) {
                         $(".selected_item").removeClass("selected_item");
                         $(this).addClass("selected_item");
@@ -87,19 +91,6 @@
             
 
         })
-       $(document).ready(function(){
-            var $textarea = $('#stu_id');
-            var $label = $('.textarea-label');
-            $textarea.on('focus', function() {
-                $label.addClass('active');
-            });
-
-            $textarea.on('blur', function() {
-                if ($textarea.val() === '') {
-                    $label.removeClass('active');
-                }
-            });
-       });
     </script>
     
 </html>
