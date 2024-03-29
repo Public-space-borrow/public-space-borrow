@@ -22,7 +22,6 @@
 </head>
 <body>
     {% include "navbar.html"%}
-    
     <!-- search the black list -->
     <div id="search_time">
         
@@ -34,39 +33,37 @@
             <table>
                 <thead>
                     <th>學號</th>
-                    <th>封鎖原因</th> 
-                    <th>封鎖截止日 <span style="color: black;">&#129033;</span><span style="color: black; display: none;">&#129035;</span></th>
-                    <!-- <div class="ui-icon ui-icon-arrowthick-1-n"></div><div class="ui-icon ui-icon-arrowthick-1-s" style="display: none;"></div> &#129033;</span><span style="color: black;">&#129153;</span>-->
-                    <th>功能</th>
+                    <th>姓名</th> 
+                    <th>系所</th>
+                    <th>email</th>
+                    <th>電話</th>
                 </thead>
                 <tbody>
-                    {% for i in ids %}
-                        <tr class="action">
-                            <td class="editable">
-                                <span>{{ i.stu_id }}</span>
-                                <input type="text" class="edit_id" style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.banned_reason }}</span>
-                                <input type="text" class="edit_reason" required style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.expire_time }}</span>
-                                <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                            </td>
-                            <!-- 多新增一個，紀錄原本ID -->
-                            <td class="editable" style="display: none;">
-                                <span class="ori_id">{{ i.stu_id }}</span>
-                            </td>
-                            <td>
-                                <button type="button" class="edit" style="display: inline">修改</button>
-                                <button type="button" class="delete" style="display: inline">刪除</button>
+                    <tr class="action">
+                        <td class="editable">
+                            <span>{{ i.stu_id }}</span>
+                            <input type="text" class="edit_id" style="display: none;">
+                        </td>
+                        <td class="editable">
+                            <span>{{ i.banned_reason }}</span>
+                            <input type="text" class="edit_reason" required style="display: none;">
+                        </td>
+                        <td class="editable">
+                            <span>{{ i.expire_time }}</span>
+                            <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
+                        </td>
+                        <!-- 多新增一個，紀錄原本ID -->
+                        <td class="editable" style="display: none;">
+                            <span class="ori_id">{{ i.stu_id }}</span>
+                        </td>
+                        <td>
+                            <button type="button" class="edit" style="display: inline">修改</button>
+                            <button type="button" class="delete" style="display: inline">刪除</button>
 
-                                <button type="button" class="save" style="display: none;">儲存</button>
-                                <button type="button" class="cancel" style="display: none;">取消</button>                                
-                            </td>
-                        </tr>
-                    {% endfor %}
+                            <button type="button" class="save" style="display: none;">儲存</button>
+                            <button type="button" class="cancel" style="display: none;">取消</button>                                
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
