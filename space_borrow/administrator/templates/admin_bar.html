@@ -1,0 +1,55 @@
+<div id = "bar">
+    <div class="sidebar">
+        <a href="{% url 'home'%}" class="bar_header">
+            <header>
+                宿舍公共空間借用系統
+            </header>
+        </a>
+        <ul>
+            <li><a href="{% url 'black_print'%}">學生資料</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'black_print'%}">黑名單</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'black_print'%}">公用系統使用率</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'black_print'%}">新增/修改/刪除 公用空間</a></li>
+        </ul>
+        <footer>
+            <a href="{% url 'AdminModel'%}" class="bar_footer">管理者頁面</a>
+        </footer>
+    </div>
+</div>
+
+<nav>
+    <div class="topbar">
+        <div class="navbar">
+            <ul>
+                <li><a href="https://housing-osa.nsysu.edu.tw/">宿服組網站</a></li>
+                <li><a href="https://housing-osa.nsysu.edu.tw/p/412-1092-18050.php?Lang=zh-tw">借用須知</a></li>
+                <li><a id="logout" style="cursor:pointer">登出<span class="material-symbols-outlined">exit_to_app</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    $("#logout").unbind().click(function(event) {
+        if (confirm("確定登出?")) {
+            $.ajax({
+                url : "{% url 'private'%}",
+                type: "post",
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("AJAX error" + errorThrown);
+                    console.log('Error: ' + errorThrown);
+                }
+            });
+        }
+
+    });
+</script>

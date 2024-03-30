@@ -1,3 +1,19 @@
+body {
+    margin: 0;
+}
+
+html {
+    height: 100%;
+    background-color: rgb(247 247 247);
+}
+
+#search_time {
+    width: 70%;
+    left: 25%;
+    position: relative;
+    top: 10vh;
+}
+
 .material-symbols-outlined {
     font-size: 16px !important;
     /* color: black !important; */
@@ -119,6 +135,10 @@ tbody tr.active-row {
     border: #93bb65 solid;
     width: auto !important;
 }
+
+
+
+
 
 @media (max-width: 376px) {
     .BL_table{
