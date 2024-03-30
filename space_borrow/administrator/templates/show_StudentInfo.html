@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href='{% static "css/styles.css" %}' rel="stylesheet">
-    {% comment %} <link href='{% static "css/loading_anima.css"%}' rel="stylesheet"> {% endcomment %}
+    <link href='{% static "css/loading_anima.css"%}' rel="stylesheet">
     <!--Jquery core import-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -22,55 +22,66 @@
 </head>
 <body>
     {% include "navbar.html" %}
-    <main>
-        <div class="progress-container">
-            <div class="progress-box">
-                <div class="progress-fill"></div>
+    {% for stu in ids %}
+    {% endfor %}
+    <main class="load">
+        <div class="scene">
+            <div class="objects">
+                <div class="square"></div>
+                <div class="circle"></div>
+                <div class="triangle"></div>
             </div>
-            <div class="progress-state state-load">Loading…</div>
-            <div class="progress-state state-finish">Complete!</div>
-        </div>
-        <div class="dump-truck">
-            <div class="front"></div>
-            <div class="bucket"></div>
-            <div class="dirt">
-                <div class="dirt-spill"></div>
+            <div class="wizard">
+                <div class="body"></div>
+                <div class="right-arm">
+                    <div class="right-hand"></div>
+                </div>
+                <div class="left-arm">
+                    <div class="left-hand"></div>
+                </div>
+                <div class="head">
+                    <div class="beard"></div>
+                    <div class="face">
+                        <div class="adds"></div>
+                    </div>
+                    <div class="hat">
+                        <div class="hat-of-the-hat"></div>
+                        <div class="four-point-star --first"></div>
+                        <div class="four-point-star --second"></div>
+                        <div class="four-point-star --third"></div>
+                    </div>
+                </div>
             </div>
-            <div class="base"></div>
-            <div class="wheel wheel-front"></div>
-            <div class="wheel wheel-middle"></div>
-            <div class="wheel wheel-back"></div>
         </div>
-        <div class="dump-truck">
-            <div class="front"></div>
-            <div class="bucket"></div>
-            <div class="dirt">
-                <div class="dirt-spill"></div>
+        <div class="load_container">	
+            <i>0%</i>	
+            <div class="Loading">
+                <span data-charge='100'></span>
             </div>
-            <div class="base"></div>
-            <div class="wheel wheel-front"></div>
-            <div class="wheel wheel-middle"></div>
-            <div class="wheel wheel-back"></div>
         </div>
+        <div class="noise"></div>
     </main>
     {% include "footer.html" %}
 </body>
-<script>
-    window.addEventListener("DOMContentLoaded", loading)
-    function loading() {
-        var percents = [0.25,0.5,0.75,1],
-            step = 0,
-            truckLoopDur = 10,
-            fill = function() {
-                let fillEl = document.querySelector(".progress-fill");
-                fillEl.style.transform = "scaleY(" + percents[step] + ")";
-                ++step;
 
-                if (step < percents.length) {
-                    setTimeout(fill, (truckLoopDur * 1e3)/2);
-                }
-            };
-        setTimeout(fill, (truckLoopDur * 1e3)/4);
-    }
+<script type="text/javascript">		
+  $(function(){
+    $('.Loading span').animate({
+      width : $('.Loading > span').data('charge') + '%'
+    },1000);
+
+    var getCounter = parseInt($('.load_container i').text());
+
+    var MyCounter = setInterval(function(){
+      if(getCounter !== 101){
+        $('.load_container i').text(getCounter++ + '%');
+      }else{
+        clearInterval(MyCounter);
+        $('.load_container i').text('Finished');
+      };
+
+    },10);
+  });
 </script>
 </html>
+

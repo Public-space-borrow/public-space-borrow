@@ -14,7 +14,7 @@
     </header>
     <body>
         <div class="hidden">
-            <form action="" method="post">
+            <form action={% url 'std_info'%} method="post">
                 {% csrf_token %}
                 <h4>請輸入學生學號(用逗號或是換行間隔):</h2>
                 <div class="form-floating">
@@ -73,7 +73,6 @@
                         panel.close();
                     });
                     $(".comfirm").unbind().click(function(event) {
-                        console.log($(".main_content > form").html());
                         $(".main_content > form").submit();
                     });
                     $(".bar_item").unbind().click(function(event) {
