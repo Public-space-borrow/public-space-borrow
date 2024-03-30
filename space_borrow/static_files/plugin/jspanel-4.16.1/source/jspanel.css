@@ -96,7 +96,9 @@
   cursor: move;
   height: 100%;
   overflow: hidden;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .jsPanel-titlebar .jsPanel-title {
   white-space: nowrap;
@@ -754,6 +756,4 @@
 
 body {
   -ms-overflow-style: scrollbar;
-}
-
-/*# sourceMappingURL=jspanel.css.map */
+}/*# sourceMappingURL=jspanel.css.map */

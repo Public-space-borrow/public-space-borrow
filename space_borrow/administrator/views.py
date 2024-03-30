@@ -76,6 +76,8 @@ def stu_info(request):
                 ids = form.cleaned_data['ids']
             
             return render(request, "show_StudentInfo.html", {"ids":ids})
+        else:
+            return render(request, "show_StudentInfo.html")
     else:
         raise Http404("Page not exit")
     

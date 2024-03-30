@@ -122,9 +122,3 @@ tbody tr.active-row {
         width: 0vw;
     }
 }
-
-/*要讓footer永遠在最底下*/
-body {
-    display: flex;
-    flex-direction: column;
-}

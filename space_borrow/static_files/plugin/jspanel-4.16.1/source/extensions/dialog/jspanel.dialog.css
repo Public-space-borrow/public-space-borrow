@@ -126,6 +126,4 @@ input[type=radio] {
 input:disabled + span {
   opacity: 0.4;
   cursor: not-allowed;
-}
-
-/*# sourceMappingURL=jspanel.dialog.css.map */
+}/*# sourceMappingURL=jspanel.dialog.css.map */
