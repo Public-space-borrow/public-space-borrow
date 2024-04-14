@@ -14,7 +14,7 @@
     </header>
     <body>
         <div class="hidden">
-            <form action={% url 'std_info'%} method="post">
+            <form action={% url 'std_info'%} method="post" target="blank">
                 {% csrf_token %}
                 <h4>請輸入學生學號(用逗號或是換行間隔):</h2>
                 <div class="form-floating">

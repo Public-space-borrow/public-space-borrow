@@ -14,16 +14,16 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href='{% static "css/styles.css" %}' rel="stylesheet">
     <link href='{% static "css/loading_anima.css"%}' rel="stylesheet">
+    <link href = '{% static "css/black_list.css" %}' rel="stylesheet">
     <!--Jquery core import-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-
+    <!--ajax CSRF token-->
+    <script src='{% static "csrf_ajax.js" %}'></script>
 </head>
 <body>
     {% include "navbar.html" %}
-    {% for stu in ids %}
-    {% endfor %}
     <main class="load">
         <div class="scene">
             <div class="objects">
@@ -59,29 +59,120 @@
                 <span data-charge='100'></span>
             </div>
         </div>
-        <div class="noise"></div>
+        <p class="total" style="display:none">{{total_ids}}</p>
     </main>
     {% include "footer.html" %}
 </body>
 
-<script type="text/javascript">		
-  $(function(){
-    $('.Loading span').animate({
-      width : $('.Loading > span').data('charge') + '%'
-    },1000);
-
-    var getCounter = parseInt($('.load_container i').text());
-
-    var MyCounter = setInterval(function(){
-      if(getCounter !== 101){
-        $('.load_container i').text(getCounter++ + '%');
-      }else{
-        clearInterval(MyCounter);
-        $('.load_container i').text('Finished');
-      };
-
-    },10);
-  });
+<script type="text/javascript">
+    function render_table(studentINFO)
+    {
+        $("main").empty();
+        $("main").removeClass();
+        $("main").append(`
+            <div class="BL_table">
+                <table>
+                    <thead>
+                        <th>學號</th>
+                        <th>姓名</th>
+                        <th>系級</th>
+                        <th>email</th> 
+                        <th>手機</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        `)
+        console.log(studentINFO);
+        for(let i in studentINFO) {
+            
+            $(".BL_table").append(`
+                <tr>${i.ID}</tr>
+                <tr>${i.name}</tr>
+                <tr>${i.department}</tr>
+                <tr>${i.email}</tr>
+                <tr>${i.phone}</tr>
+            `)
+        }
+    }
+    $(window).on("load", function(){
+        if(localStorage.getItem('studentINFO')) {
+            render_table(localStorage.getItem('studentINFO'));
+        }
+        else {
+            var getCounter = 0;
+            var MyCounter = setInterval(function(){
+                $.ajax({
+                    url : "",
+                    type : "post",
+                    data:{
+                        'check' : "check",
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        let ids_len = parseInt($(".total").html());
+                        if(response !== ids_len){
+                            getCounter = parseInt((response / ids_len) * 100);
+                            $('.load_container i').text(getCounter + '%');
+                            $('.Loading span').animate({
+                                width : (getCounter) + '%'
+                            }, 900);
+                        }else{
+                            clearInterval(MyCounter);
+                            $('.load_container i').text('Finished');
+                            $('.Loading span').css({
+                                width : 100 + '%'
+                            });
+                            //successful load all the student
+                            $.ajax({
+                                url : "",
+                                type : "post",
+                                data:{
+                                    'finish' : "finish",
+                                },
+                                dataType: "json",
+                                success: function(response) {
+                                    localStorage['studentINFO'] = response;
+                                    render_table(localStorage['studentINFO']);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown){
+                                    alert("AJAX error" + errorThrown);
+                                    console.log('Error: ' + errorThrown);
+                                }
+                            }); 
+                        };
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        alert("AJAX error" + errorThrown);
+                        console.log('Error: ' + errorThrown);
+                        clearInterval(MyCounter);
+                    }
+                }); 
+            },3000);
+        }
+    });
+    $(window).on("unload", function(){
+        if($("main.load")) {
+            $.ajax({
+                url : "",
+                type : "post",
+                data:{
+                    'shutdown' : "shutdown",
+                },
+                dataType: "json",
+                success: function(response) {
+                    
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("AJAX error" + errorThrown);
+                    console.log('Error: ' + errorThrown);
+                }
+            }); 
+        }
+        localStorage.removeItem("studentINFO");
+    });
 </script>
 </html>
 
