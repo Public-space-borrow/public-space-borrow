@@ -3,7 +3,7 @@ from .models import *
 from django.http import Http404, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from public_borrow.models import BlackList
-
+import pandas as pd
 import datetime
 from datetime import date
 from datetime import datetime
@@ -68,7 +68,7 @@ def BlackList_edit(request):
     else:
         return HttpResponse('修改失敗')
     
-
+from .utility import student
 def stu_info(request):
     if request.session['identity'] == "private" and request.method == "POST":
         if request.method == "POST":
@@ -76,8 +76,10 @@ def stu_info(request):
             if form.is_valid():
                 ids = form.cleaned_data['ids']
                 ids = ids.split()
-        
-            return render(request, "show_StudentInfo.html", {"ids":ids.split()})
+            data = {
+                "total_ids" : len(ids),
+            }
+            return render(request, "show_StudentInfo.html", data)
     else:
         raise Http404("Page not exit")
     
