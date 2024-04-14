@@ -1,4 +1,4 @@
-$(documet).ready(function(){
+window.onload = function(){
     var template = $("tbody").html();
     $("#car-type").selectmenu();
     $("tbody").empty();
@@ -15,7 +15,7 @@ $(documet).ready(function(){
         $firstTd.html(time);
         $lastTd.html(time);
     }
-});
+}
 function collect_regist(space_id) {
     $.ajax({
         url : "request_regist",

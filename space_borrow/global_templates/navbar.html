@@ -54,7 +54,7 @@
             type: "post",
             data: {"pwd": "", "mode":"logout"},
             success: function(response) {
-                location.reload();
+                window.location = "{% url 'home'%}"
             },
             error: function(jqXHR, textStatus, errorThrown){
                 alert("AJAX error" + errorThrown);

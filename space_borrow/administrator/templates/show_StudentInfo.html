@@ -85,73 +85,71 @@
                 </table>
             </div>
         `)
-        console.log(studentINFO);
         for(let i in studentINFO) {
-            
-            $(".BL_table").append(`
-                <tr>${i.ID}</tr>
-                <tr>${i.name}</tr>
-                <tr>${i.department}</tr>
-                <tr>${i.email}</tr>
-                <tr>${i.phone}</tr>
+            console.log(studentINFO[i].ID);
+            $("tbody").append(`
+            <tr>
+                <td>${studentINFO[i].ID}</td>
+                <td>${studentINFO[i].name}</td>
+                <td>${studentINFO[i].department}</td>
+                <td>${studentINFO[i].email}</td>
+                <td>${studentINFO[i].phone}</td>
+            </tr>
             `)
         }
     }
     $(window).on("load", function(){
-        if(localStorage.getItem('studentINFO')) {
-            render_table(localStorage.getItem('studentINFO'));
-        }
-        else {
-            var getCounter = 0;
-            var MyCounter = setInterval(function(){
-                $.ajax({
-                    url : "",
-                    type : "post",
-                    data:{
-                        'check' : "check",
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        let ids_len = parseInt($(".total").html());
-                        if(response !== ids_len){
-                            getCounter = parseInt((response / ids_len) * 100);
-                            $('.load_container i').text(getCounter + '%');
-                            $('.Loading span').animate({
-                                width : (getCounter) + '%'
-                            }, 900);
-                        }else{
-                            clearInterval(MyCounter);
-                            $('.load_container i').text('Finished');
-                            $('.Loading span').css({
-                                width : 100 + '%'
-                            });
-                            //successful load all the student
-                            $.ajax({
-                                url : "",
-                                type : "post",
-                                data:{
-                                    'finish' : "finish",
-                                },
-                                dataType: "json",
-                                success: function(response) {
-                                    localStorage['studentINFO'] = response;
-                                    render_table(localStorage['studentINFO']);
-                                },
-                                error: function(jqXHR, textStatus, errorThrown){
-                                    alert("AJAX error" + errorThrown);
-                                    console.log('Error: ' + errorThrown);
-                                }
-                            }); 
-                        };
-                    },
-                    error: function(jqXHR, textStatus, errorThrown){
-                        alert("AJAX error" + errorThrown);
-                        console.log('Error: ' + errorThrown);
-                        clearInterval(MyCounter);
+        var getCounter = 0;
+        var MyCounter = setInterval(function(){
+            $.ajax({
+                url : "",
+                type : "post",
+                data:{
+                    'check' : "check",
+                },
+                success: function(response) {
+                    let ids_len = parseInt($(".total").html());
+                    if(response == "error") {
+                        alert("出現錯誤!");
+                        window.close();
                     }
-                }); 
-            },3000);
-        }
+                    if(parseInt(response) < parseInt(ids_len)){
+                        getCounter = parseInt((response / ids_len) * 100);
+                        $('.load_container i').text(getCounter + '%');
+                        $('.Loading span').animate({
+                            width : (getCounter) + '%'
+                        }, 900);
+                    }else{
+                        clearInterval(MyCounter);
+                        $('.load_container i').text('Finished');
+                        $('.Loading span').css({
+                            width : 100 + '%'
+                        });
+                        //successful load all the student
+                        $.ajax({
+                            url : "",
+                            type : "post",
+                            data:{
+                                'finish' : "finish",
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                render_table(response)
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                alert("AJAX error" + errorThrown);
+                                console.log('Error: ' + errorThrown);
+                            }
+                        }); 
+                    };
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("AJAX error" + errorThrown);
+                    console.log('Error: ' + errorThrown);
+                    clearInterval(MyCounter);
+                }
+            }); 
+        },3000);
     });
     $(window).on("unload", function(){
         if($("main.load")) {
@@ -171,7 +169,6 @@
                 }
             }); 
         }
-        localStorage.removeItem("studentINFO");
     });
 </script>
 </html>

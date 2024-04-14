@@ -97,7 +97,8 @@ def stu_info(request):
             num_id = len(student)
             lock.release()
             if num_id > 0 and student[-1] == "error":
-                return HttpResponse(student[-1])
+                print("return error")
+                return HttpResponse("error")
             return HttpResponse(num_id)
         elif request.POST.get("finish"):
             student_list = list(student)
@@ -108,8 +109,8 @@ def stu_info(request):
             return JsonResponse(student_list, safe=False)
         elif request.POST.get("shutdown"):
             if p:
-                del p
                 p.terminate()
+                del p
             error_message = student[-1]
             del student
             del lock
