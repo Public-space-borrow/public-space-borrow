@@ -92,7 +92,7 @@ nav li{
 .navbar {
     display: flex;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: flex-end !important;
     align-items: center;
     border-bottom: #bbb9b9 solid 0.3px;
 }
