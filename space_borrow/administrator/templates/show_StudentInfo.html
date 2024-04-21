@@ -22,6 +22,10 @@
     <!--ajax CSRF token-->
     <script src='{% static "csrf_ajax.js" %}'></script>
 </head>
+<script>
+    let ids_len = parseInt("{{total_ids}}");
+    let r_id = "{{request_id}}";
+</script>
 <body>
     {% include "navbar.html" %}
     <main class="load">
@@ -60,6 +64,7 @@
             </div>
         </div>
         <p class="total" style="display:none">{{total_ids}}</p>
+        <p class="request_id" style="display:none">{{request_id}}</p>
     </main>
     {% include "footer.html" %}
 </body>
@@ -89,7 +94,7 @@
             console.log(studentINFO[i].ID);
             $("tbody").append(`
             <tr>
-                <td>${studentINFO[i].ID}</td>
+                <td>${studentINFO[i].stu_id}</td>
                 <td>${studentINFO[i].name}</td>
                 <td>${studentINFO[i].department}</td>
                 <td>${studentINFO[i].email}</td>
@@ -106,14 +111,16 @@
                 type : "post",
                 data:{
                     'check' : "check",
+                    'request_id'  : r_id,
                 },
                 success: function(response) {
-                    let ids_len = parseInt($(".total").html());
-                    if(response == "error") {
+                    if(response == "error" || response == "login error") {
                         alert("出現錯誤!");
                         window.close();
                     }
                     if(parseInt(response) < parseInt(ids_len)){
+                        console.log(response);
+                        console.log(ids_len);
                         getCounter = parseInt((response / ids_len) * 100);
                         $('.load_container i').text(getCounter + '%');
                         $('.Loading span').animate({
@@ -131,6 +138,7 @@
                             type : "post",
                             data:{
                                 'finish' : "finish",
+                                'request_id'  : r_id,
                             },
                             dataType: "json",
                             success: function(response) {
@@ -158,16 +166,13 @@
                 type : "post",
                 data:{
                     'shutdown' : "shutdown",
-                },
-                dataType: "json",
-                success: function(response) {
-                    
+                    'request_id'  : r_id,
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     alert("AJAX error" + errorThrown);
                     console.log('Error: ' + errorThrown);
                 }
-            }); 
+            });
         }
     });
 </script>

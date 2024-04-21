@@ -65,56 +65,46 @@ def BlackList_print(request):
         raise Http404("Page not exit")
 
     
-from .utility import crawl_student
-
+from random import random
+import uwsgi
 def stu_info(request):
     if request.session['identity'] == "private" and request.method == "POST":
         #adding new ids
         if request.POST.get("ids"): 
-            global m
-            global student
-            global lock
-            m = Manager()
-            student = m.list()
             form = StudentID(request.POST)
             if form.is_valid():
                 ids = form.cleaned_data['ids']
-                ids = ids.split()
+                
+            r_id = str(int(random() * 1000))
             data = {
-                "total_ids" : len(ids),
+                "total_ids" : len(ids.split()),
+                "request_id": r_id,
             }
-            #avoid race condition
-            lock = m.Lock()
-            global p
-            p = Process(target=crawl_student, args=(student, ids, lock))
-            p.start()
+            uwsgi.spool({b"request_id": bytes(r_id, "utf8"), b"ids":bytes(ids, "utf8")})
             return render(request, "show_StudentInfo.html", data)
         #checking proccess status
-        elif request.POST.get("check"):
-            lock.acquire()
-            num_id = len(student)
-            lock.release()
-            if num_id > 0 and student[-1] == "error":
-                print("return error")
+        elif request.POST.get("check") and request.POST.get("request_id"):
+            r_id = request.POST.get("request_id")
+            if uwsgi.cache_exists(r_id, "stu_process") != True:
+                print(uwsgi.cache_get("error_msg", "stu_process"))
                 return HttpResponse("error")
+            num_id = uwsgi.cache_get(r_id, "stu_process").decode("utf8")
+            if uwsgi.cache_exists("error_msg", "stu_process"):
+                print(uwsgi.cache_get("error_msg", "stu_process"))
+            print(num_id)
             return HttpResponse(num_id)
-        elif request.POST.get("finish"):
-            student_list = list(student)
-            del student
-            del lock
-            del m
-            del p
+        elif request.POST.get("finish") and request.POST.get("request_id"):
+            r_id = request.POST.get("request_id")
+            if uwsgi.cache_exists(r_id, "stu_process") != True:
+                return HttpResponse("error")
+            student_list = studentINFO.objects.filter(request_id=r_id).values("stu_id", "email", "name", "department", "phone")
+            student_list = list(student_list)
+            print(student_list)
+            uwsgi.cache_del(r_id, "stu_process")
             return JsonResponse(student_list, safe=False)
-        elif request.POST.get("shutdown"):
-            if p:
-                p.terminate()
-                del p
-            error_message = student[-1]
-            del student
-            del lock
-            del m
-            
-            return HttpResponse(error_message)
+        elif request.POST.get("shutdown") and request.POST.get("request_id"):
+            uwsgi.cache_update(r_id, b"shutdown", 60000, "stu_process")
+            return HttpResponse()
     else:
         raise Http404("Page not found!")
     

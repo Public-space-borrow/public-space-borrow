@@ -102,6 +102,7 @@ def get_regist(request):
                 record['user_name'] = record['user_name'][0] + "X" + record['user_name'][2:]
                 record['user_phone'] = ""
             record['date'] = int_to_date[record['date'].weekday()]
+        print(all_regist)
         return JsonResponse(all_regist, safe=False)
     else:
         raise Http404("Page not exit")
