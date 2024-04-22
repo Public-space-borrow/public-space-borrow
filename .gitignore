@@ -1,2 +1,4 @@
 *.pyc
 __pycache__/
+space_borrow/all_static_files/*
+*.log

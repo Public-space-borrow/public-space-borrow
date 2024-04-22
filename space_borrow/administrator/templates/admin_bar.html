@@ -17,6 +17,9 @@
         <ul>
             <li><a href="{% url 'black_print'%}">新增/修改/刪除 公用空間</a></li>
         </ul>
+        <ul>
+            <li><a href="{% url 'black_print'%}">空間佔用</a></li>
+        </ul>
         <footer>
             <a href="{% url 'AdminModel'%}" class="bar_footer">管理者頁面</a>
         </footer>
@@ -34,7 +37,7 @@
         </div>
     </div>
 </nav>
-
+{% include "get_StudentInfo_panel.html"%}
 <script>
     $("#logout").unbind().click(function(event) {
         if (confirm("確定登出?")) {
