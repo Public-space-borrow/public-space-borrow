@@ -1,7 +1,6 @@
-{% if request.session.identity == "private" %}
-
 <!DOCTYPE html>
 {% load static%}
+{% if request.session.identity == "private" %}
 <html lang="en">
 
 <head>
@@ -33,7 +32,8 @@
 <body>
 
     {% include "admin_bar.html"%}
-    
+    {% include "get_StudentInfo_panel.html"%}
+
     <!-- search the black list -->
     <div id="search_time">
         
@@ -120,8 +120,4 @@
 
 
 </html>
-{% else %}
-    <script>
-        window.location.href = "{% url 'home' %}";
-    </script>
 {% endif %}
