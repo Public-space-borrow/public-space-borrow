@@ -1,2 +1,6 @@
-*.pyc
-__pycache__/
+.pyc
+pycache/
+space_borrow/all_static_files/
+*.log
+*.DS_Store
+*.pid
