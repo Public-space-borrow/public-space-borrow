@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path
 from public_borrow import views
 from administrator import views as administrator_views
+from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
     path("regist", views.regist_page),
     path("request_regist", views.get_regist),
-    path("private_mode", views.admin_mode, name="private"),
+    path("login", views.admin_mode, name="login"),
     path("AdminModel", administrator_views.AdminModel_print, name="AdminModel"),
     path("blackList", administrator_views.BlackList_print, name="black_print"),
     path("stu_info", administrator_views.stu_info, name="std_info"),
+    path("logout", LogoutView.as_view(), name="logout"),
 ]

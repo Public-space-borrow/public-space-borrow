@@ -1,16 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
-from django.http import Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponse, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 from public_borrow.models import BlackList
-from django.db.models import F
 import datetime
 from datetime import datetime
 from .forms import StudentID
-from multiprocessing import Process, Manager
 @csrf_exempt
 def AdminModel_print(request):
-    return render(request, "AdminModel.html")
+    if request.user.is_authenticated and request.user.is_admin == True:
+        print("in!@!")
+        return render(request, "AdminModel.html")
+    else:
+        return redirect("home")
 
 @csrf_exempt
 def BlackList_print(request):
@@ -68,7 +70,7 @@ def BlackList_print(request):
 from random import random
 import uwsgi
 def stu_info(request):
-    if request.session['identity'] == "private" and request.method == "POST":
+    if request.user.is_admin and request.method == "POST":
         #adding new ids
         if request.POST.get("ids"): 
             form = StudentID(request.POST)

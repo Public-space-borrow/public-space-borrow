@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import Http404, JsonResponse, HttpResponse
 from django.core import serializers
@@ -8,8 +8,6 @@ from django.views.decorators.csrf import csrf_exempt
 import datetime
 # Create your views here.
 def home(request):
-    if 'identity' not in request.session:
-        request.session['identity'] = "normal"
     wulin = Space.objects.filter(region__exact='武嶺')
     CueiHeng = Space.objects.filter(region__exact='翠亨')
     YuShu = Space.objects.filter(region__exact="雨樹")
@@ -97,7 +95,7 @@ def get_regist(request):
         all_regist = list(all_regist)
         int_to_date = ['一', '二', '三', '四', '五', '六', '日']
         for record in all_regist:
-            if request.session['identity'] == "normal":
+            if request.user.is_authenticated != True:
                 record['user_id'] = record['user_id'][:-5] + "XXXXX"
                 record['user_name'] = record['user_name'][0] + "X" + record['user_name'][2:]
                 record['user_phone'] = ""
@@ -106,18 +104,28 @@ def get_regist(request):
         return JsonResponse(all_regist, safe=False)
     else:
         raise Http404("Page not exit")
-    
-@csrf_exempt
+
+from .form import loginForm
+from django.contrib.auth import login, authenticate
 def admin_mode(request):
-    if request.method == "POST":
-        if request.POST.get("mode") == "login":
-            if request.POST.get("pwd") == "76211194":
-                request.session['identity'] = "private"
-                return HttpResponse("登入成功，切換為管理者模式")
+    msg = None
+    if request.user.is_authenticated:
+        redirect("home")
+    if request.method == "GET":
+        return render(request, "login.html")
+    elif request.method == "POST":
+        form = loginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            pwd = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=pwd)
+            if user:
+                login(request, user)
+                print("login success")
+                return redirect("home")
             else:
-                return HttpResponse("密碼錯誤！")
+                msg = "帳號或密碼錯誤"
         else:
-            request.session['identity'] = "normal"
-            return HttpResponse("登出成功，切換為一般模式")
-    else:
-        raise Http404("Page not exit")
+            print(form)
+    
+    return render(request, "login.html", {"msg": msg})

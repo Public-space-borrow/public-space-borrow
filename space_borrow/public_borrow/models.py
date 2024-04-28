@@ -7,8 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
-
 class Space(models.Model):
     id = models.AutoField(primary_key=True)  # Field name made lowercase.
     space_name = models.CharField(max_length=255)  # Field name made lowercase.

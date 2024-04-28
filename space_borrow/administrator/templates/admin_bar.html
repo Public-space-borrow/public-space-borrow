@@ -1,3 +1,4 @@
+{% load static %}
 <div id = "bar">
     <div class="sidebar">
         <a href="{% url 'home'%}" class="bar_header">
@@ -38,11 +39,12 @@
     </div>
 </nav>
 {% include "get_StudentInfo_panel.html"%}
+<script src='{% static "csrf_ajax.js"%}'></script>
 <script>
     $("#logout").unbind().click(function(event) {
         if (confirm("確定登出?")) {
             $.ajax({
-                url : "{% url 'private'%}",
+                url : "{% url 'logout'%}",
                 type: "post",
                 success: function(response) {
                     location.reload();
