@@ -110,3 +110,14 @@ def stu_info(request):
     else:
         raise Http404("Page not found!")
     
+
+from django.db import connection
+def admin_reserve(request):
+    if request.user.is_authenticated and request.user.is_admin:
+        today = datetime.today()
+        data = {
+            "today" : today
+        }
+        return render(request, "admin_reserve.html", data)
+    else:
+        redirect("home")

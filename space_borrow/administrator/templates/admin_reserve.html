@@ -36,7 +36,7 @@
     <!-- search the black list -->
     <div id="search_time">
         
-        <h1 style="text-align: center; margin-top: 5vh;">黑名單</h1>
+        <h1 style="text-align: center; margin-top: 5vh;">預先預約</h1>
 
         <!-- <button id="time" style="text-align: center;">以時間查詢黑名單</button> -->
 
@@ -55,46 +55,14 @@
                         <form id="input_blacklist" action="" method = "post">
                             <td><input type="text" name="input_id" id="input_id" placeholder="學號" required></td>
                             <td><input type="text" name="input_reason" id="input_reason" placeholder="封鎖原因" required></td>
-                            <td><input type="date" name="input_time" id="input_time" placeholder="封鎖截止日" min="2024-03-01" required></td>
+                            <td><input type="date" name="input_time" id="input_time" placeholder="封鎖截止日" min="{{today}}" required></td>
                             <td><span id="crea_date"></span></td>
                             <td><input type="submit" value="新增" id="add"></td>
-                            
                         </form>
                     </tr>
-                    {% for i in time %}
-                        <tr class="action">
-                            <td class="editable">
-                                <span>{{ i.stu_id }}</span>
-                                <input type="text" class="edit_id" style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.banned_reason }}</span>
-                                <input type="text" class="edit_reason" required style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.expire_time }}</span>
-                                <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                            </td>
-                            <!-- 多新增一個，紀錄原本ID -->
-                            <td class="editable" style="display: none;">
-                                <span class="ori_id">{{ i.stu_id }}</span>
-                            </td>
-                            <td>
-                                <span>{{ i.creation_date}}</span>
-                            </td>
-                            <td>
-                                <button type="button" class="edit" style="display: inline">修改</button>
-                                <button type="button" class="delete" style="display: inline">刪除</button>
-
-                                <button type="button" class="save" style="display: none;">儲存</button>
-                                <button type="button" class="cancel" style="display: none;">取消</button>                                
-                            </td>
-                        </tr>
-                    {% endfor %}
                 </tbody>
             </table>
         </div>
-    
     </div>
 
 </body>
