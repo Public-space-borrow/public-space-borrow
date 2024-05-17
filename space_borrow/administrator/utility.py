@@ -93,7 +93,6 @@ def crawl_student(args):
     except Exception as e:
         uwsgi.cache_update("error_msg", str(e), 60000, "stu_process")
         uwsgi.cache_update(request_id, "error", 60000, "stu_process")
-        connection.close()
         return uwsgi.SPOOL_OK
     try:
         driver.close()

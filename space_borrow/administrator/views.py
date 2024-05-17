@@ -46,7 +46,6 @@ def BlackList_print(request):
     
             return HttpResponse('黑名單新增成功')
         
-        # DELETE black list
         elif request.POST.get("mode") == "blacklist_delete":
 
             delete_blacklist = BlackList.objects.get(stu_id=request.POST.get('stu_id'))
@@ -116,21 +115,29 @@ import json
 def admin_reserve(request):
     if request.user.is_authenticated and request.user.is_admin:
         if request.method == "GET":
-            today = datetime.today()
+            today = datetime.now().date().strftime("%Y-%m-%d")
             data = {
-                "spaces": json.dumps(list(Space.objects.all().values("id", "region", "space_name"))),
+                "spaces": list(Space.objects.all().values("id", "region", "space_name")),
                 "today" : today
             }
             print(data['spaces'])
             return render(request, "admin_reserve.html", data)
         elif request.method == "POST":
-            form = reservation(request.POST)
-            if form.is_valid():
-                hours = form.cleaned_data.get('hours')
-                start_time = form.cleaned_data.get('startTime')
-                for i in hours:
-                    new_record = Register()
+            if request.POST.get("time_search"):
+                space_id = request.POST.get("space_id")
+                date = request.POST.get("date")
+                print(space_id, date)
+                times = list(Register.objects.filter(date=date, space=space_id).order_by('start_time').values_list('start_time', flat=True))
+                print(times)
+                return JsonResponse(times, safe=False)
             else:
-                print(form)
+                form = reservation(request.POST)
+                if form.is_valid():
+                    hours = form.cleaned_data.get('hours')
+                    start_time = form.cleaned_data.get('startTime')
+                    for i in hours:
+                        new_record = Register()
+                else:
+                    print(form)
     else:
         redirect("home")
