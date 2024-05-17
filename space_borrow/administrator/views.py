@@ -110,14 +110,27 @@ def stu_info(request):
     else:
         raise Http404("Page not found!")
     
-
-from django.db import connection
+from .forms import reservation
+from public_borrow.models import Register, Space
+import json
 def admin_reserve(request):
     if request.user.is_authenticated and request.user.is_admin:
-        today = datetime.today()
-        data = {
-            "today" : today
-        }
-        return render(request, "admin_reserve.html", data)
+        if request.method == "GET":
+            today = datetime.today()
+            data = {
+                "spaces": json.dumps(list(Space.objects.all().values("id", "region", "space_name"))),
+                "today" : today
+            }
+            print(data['spaces'])
+            return render(request, "admin_reserve.html", data)
+        elif request.method == "POST":
+            form = reservation(request.POST)
+            if form.is_valid():
+                hours = form.cleaned_data.get('hours')
+                start_time = form.cleaned_data.get('startTime')
+                for i in hours:
+                    new_record = Register()
+            else:
+                print(form)
     else:
         redirect("home")

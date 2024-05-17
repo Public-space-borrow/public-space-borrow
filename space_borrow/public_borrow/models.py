@@ -16,6 +16,7 @@ class Space(models.Model):
 
     class Meta:
         managed = True
+        unique_together = ('space_name', 'region',)
         db_table = 'Space'
         
 class Register(models.Model):

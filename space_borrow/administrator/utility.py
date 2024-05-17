@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from administrator.models import studentINFO
+from django.db import connection
 def crawl_student(args):
     request_id = args[b'request_id'].decode("utf8")
     ids = args[b'ids'].decode("utf8")
@@ -92,11 +93,13 @@ def crawl_student(args):
     except Exception as e:
         uwsgi.cache_update("error_msg", str(e), 60000, "stu_process")
         uwsgi.cache_update(request_id, "error", 60000, "stu_process")
+        connection.close()
         return uwsgi.SPOOL_OK
     try:
         driver.close()
     except:
         pass
+    connection.close()
     return uwsgi.SPOOL_OK
 
 uwsgi.spooler = crawl_student
