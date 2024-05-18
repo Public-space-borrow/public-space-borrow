@@ -43,13 +43,17 @@ $("#reserveDate").on('change', function() {
 });
 
 $("#startTime").on("change", function() {
-    let start_idx = time_availables.indexOf($(this).val());
+    let now = parseInt($(this).val());
+    let start_idx = time_availables.indexOf(now);
     $("#hours").empty();
-    $("#hours").push("<option disabled selected value> -------- </option>");
-    $("#hours").push("<option value=1>1</option>");
-    for(let j = 0; j < 15; ++j) {
+    $("#hours").append("<option disabled selected value> -------- </option>");
+    $("#hours").append(`<option value=${$(this).val()}>${$(this).val()}:00</option>`);
+    for(let j = start_idx; time_availables[j] <= 23; ++j) {
         if(time_availables[j + 1] - time_availables[j] === 1) {
-            $("#hours").push(`<option value=1>1</option>`);
+            $("#hours").append(`<option value=${time_availables[j + 1]}>${time_availables[j + 1]}:00</option>`);
+        }
+        else {
+            break;
         }
     }
 });
