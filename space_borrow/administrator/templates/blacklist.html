@@ -61,34 +61,34 @@
                         </form>
                     </tr>
                     {% for i in time %}
-                        <tr class="action">
-                            <td class="editable">
-                                <span>{{ i.stu_id }}</span>
-                                <input type="text" class="edit_id" style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.banned_reason }}</span>
-                                <input type="text" class="edit_reason" required style="display: none;">
-                            </td>
-                            <td class="editable">
-                                <span>{{ i.expire_time }}</span>
-                                <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
-                            </td>
-                            <!-- 多新增一個，紀錄原本ID -->
-                            <td class="editable" style="display: none;">
-                                <span class="ori_id">{{ i.stu_id }}</span>
-                            </td>
-                            <td>
-                                <span>{{ i.creation_date}}</span>
-                            </td>
-                            <td>
-                                <button type="button" class="edit" style="display: inline">修改</button>
-                                <button type="button" class="delete" style="display: inline">刪除</button>
+                    <tr class="action">
+                        <td class="editable">
+                            <span>{{ i.stu_id }}</span>
+                            <input type="text" class="edit_id" style="display: none;">
+                        </td>
+                        <td class="editable">
+                            <span>{{ i.banned_reason }}</span>
+                            <input type="text" class="edit_reason" required style="display: none;">
+                        </td>
+                        <td class="editable">
+                            <span>{{ i.expire_time }}</span>
+                            <input type="date" class="edit_time" min="2024-03-01" required style="display: none;">
+                        </td>
+                        <!-- 多新增一個，紀錄原本ID -->
+                        <td class="editable" style="display: none;">
+                            <span class="ori_id">{{ i.stu_id }}</span>
+                        </td>
+                        <td>
+                            <span>{{ i.creation_date}}</span>
+                        </td>
+                        <td>
+                            <button type="button" class="edit" style="display: inline">修改</button>
+                            <button type="button" class="delete" style="display: inline">刪除</button>
 
-                                <button type="button" class="save" style="display: none;">儲存</button>
-                                <button type="button" class="cancel" style="display: none;">取消</button>                                
-                            </td>
-                        </tr>
+                            <button type="button" class="save" style="display: none;">儲存</button>
+                            <button type="button" class="cancel" style="display: none;">取消</button>                                
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

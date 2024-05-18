@@ -127,5 +127,5 @@ def admin_mode(request):
                 msg = "帳號或密碼錯誤"
         else:
             print(form)
-    
+            raise Http404("form invalid!")
     return render(request, "login.html", {"msg": msg})

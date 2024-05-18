@@ -9,7 +9,6 @@ from .forms import StudentID
 @csrf_exempt
 def AdminModel_print(request):
     if request.user.is_authenticated and request.user.is_admin == True:
-        print("in!@!")
         return render(request, "AdminModel.html")
     else:
         return redirect("home")
@@ -17,8 +16,6 @@ def AdminModel_print(request):
 @csrf_exempt
 def BlackList_print(request):
     today = datetime.now().date()
-
-    # print black list
     if request.method == "GET":
         time = BlackList.objects.filter(expire_time__gte=today).order_by('expire_time').extra(
             select={'expire_time': "DATE_FORMAT(expire_time, '%%Y-%%m-%%d')",
@@ -92,7 +89,6 @@ def stu_info(request):
             num_id = uwsgi.cache_get(r_id, "stu_process").decode("utf8")
             if uwsgi.cache_exists("error_msg", "stu_process"):
                 print(uwsgi.cache_get("error_msg", "stu_process"))
-            print(num_id)
             return HttpResponse(num_id)
         elif request.POST.get("finish") and request.POST.get("request_id"):
             r_id = request.POST.get("request_id")
@@ -100,7 +96,6 @@ def stu_info(request):
                 return HttpResponse("error")
             student_list = studentINFO.objects.filter(request_id=r_id).values("stu_id", "email", "name", "department", "phone")
             student_list = list(student_list)
-            print(student_list)
             uwsgi.cache_del(r_id, "stu_process")
             return JsonResponse(student_list, safe=False)
         elif request.POST.get("shutdown") and request.POST.get("request_id"):
@@ -111,33 +106,39 @@ def stu_info(request):
     
 from .forms import reservation
 from public_borrow.models import Register, Space
-import json
 def admin_reserve(request):
     if request.user.is_authenticated and request.user.is_admin:
         if request.method == "GET":
             today = datetime.now().date().strftime("%Y-%m-%d")
+            admin_record = Register.objects.filter(usable=0, data__gte=today)
             data = {
                 "spaces": list(Space.objects.all().values("id", "region", "space_name")),
-                "today" : today
+                "today" : today,
+                "records": admin_record,
             }
-            print(data['spaces'])
             return render(request, "admin_reserve.html", data)
         elif request.method == "POST":
             if request.POST.get("time_search"):
                 space_id = request.POST.get("space_id")
                 date = request.POST.get("date")
-                print(space_id, date)
                 times = list(Register.objects.filter(date=date, space=space_id).order_by('start_time').values_list('start_time', flat=True))
-                print(times)
                 return JsonResponse(times, safe=False)
             else:
                 form = reservation(request.POST)
                 if form.is_valid():
-                    hours = form.cleaned_data.get('hours')
+                    space_id = form.cleaned_data.get('space')
                     start_time = form.cleaned_data.get('startTime')
-                    for i in hours:
-                        new_record = Register()
+                    end_time = form.cleaned_data.get("endTime")
+                    reason = form.cleaned_data.get("reason")
+                    reserve_date = form.cleaned_data.get("date")
+                    while start_time <= end_time:
+                        sig = str(start_time) + str(space_id) + str(reserve_date).strftime("%Y-%m-%d")
+                        new_reserve = Register(space=space_id, date=reserve_date, signature=sig, usable=0, user_name=reason)
+                        new_reserve.save()
+                        start_time += 1
+                    redirect("admin_reserve")
                 else:
                     print(form)
+                    raise Http404("form invalid")
     else:
         redirect("home")

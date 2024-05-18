@@ -59,7 +59,7 @@
                     <th>預借空間</th>
                     <th>預借日期</th>
                     <th>起始時間</th> 
-                    <th>時數</th>
+                    <th>結束時間<br>(使用的最後一小時)</th>
                     <th>預借事由</th>
                     <th>功能</th>
                 </thead>
@@ -87,7 +87,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select name="hours" id="hours">
+                                <select name="endTime" id="hours">
                                     <option disabled selected value> -------- </option>
                                 </select>
                             </td>
@@ -95,6 +95,13 @@
                             <td><input type="submit" value="新增" id="add"></td>
                         </form>
                     </tr>
+                    {% for i in records %}
+                    <tr>
+                        <td>
+                            <span>{{ i.region }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
