@@ -57,3 +57,33 @@ $("#startTime").on("change", function() {
         }
     }
 });
+
+$("#delete").unbind().click(function() {
+    let space = $(this).parent().siblings()[1].children[1].innerHTML; //要送space id 而非space name
+    let date = $(this).parent().siblings()[2].children[0].innerHTML;
+    let s_time = $(this).parent().siblings()[3].children[0].innerHTML;
+    let e_time = $(this).parent().siblings()[4].children[0].innerHTML;
+    let reason = $(this).parent().siblings()[5].children[0].innerHTML;
+    let formData = {
+        "delete": true,
+        "space" : parseInt(space),
+        "date" : date,
+        "startTime" : parseInt(s_time),
+        "endTime": parseInt(e_time),
+        "reason": reason,
+    }
+    $.ajax({
+        url : "",
+        type : "post",
+        data: formData,
+        success: function(response) {
+            alert("delete sucess");
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("AJAX error" + errorThrown);
+            console.log('Error: ' + errorThrown);
+            location.reload();
+        }
+    });
+});

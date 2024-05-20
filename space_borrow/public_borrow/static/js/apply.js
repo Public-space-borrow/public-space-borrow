@@ -30,13 +30,22 @@ function collect_regist(space_id) {
                 let days = $("tbody tr").eq(index);
                 days.find("td").each(function(){
                     if(this.children[0] != null && this.children[0].innerHTML == response[i].date) { 
-                        this.children[1].innerHTML = `
-                            <span>${response[i].user_name}</span><br>
-                            <span class= "span2">${response[i].user_id}</span>
-                        `;
-                        this.classList.add('used');
-                        this.classList.remove('registButt');
-                        this.children[2].innerHTML = JSON.stringify(response[i]);
+                        if(response[i].usable == 1) {
+                            this.children[1].innerHTML = `
+                                <span>${response[i].user_name}</span><br>
+                                <span class= "span2">${response[i].user_id}</span>
+                            `;
+                            this.classList.add('used');
+                            this.classList.remove('registButt');
+                            this.children[2].innerHTML = JSON.stringify(response[i]);
+                        }
+                        else {
+                            this.children[1].innerHTML = `
+                                <span>${response[i].user_name}</span><br>
+                            `;
+                            this.classList.add('adminReserve');
+                            this.classList.remove('registButt');
+                        }
                     }
                 });
             }
@@ -63,10 +72,6 @@ function show_hours() {
 
 
 function updateButtonAct() {
-    //self but
-    $(".used a").unbind().click(function(event){
-        event.preventDefault();
-    });
     $('.used a').unbind().click(function(event){
         event.preventDefault();
         var time = $(this).parent();
@@ -123,11 +128,6 @@ function updateButtonAct() {
             },
         });
 
-    });
-
-    //normal but
-    $(".registButt a").unbind().click(function(event){
-        event.preventDefault();
     });
     //clickable but
     $(".registButt a").unbind().click(function(event){
@@ -203,5 +203,8 @@ function updateButtonAct() {
                 });
             },
         });
+    });
+    $(".adminReserve").unbind().click(function(event) {
+        event.preventDefault();
     });
 }

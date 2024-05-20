@@ -91,16 +91,15 @@ def get_regist(request):
         space = request.POST.get('id')
         today = datetime.date.today().isocalendar()
         week_firstDay = datetime.date.fromisocalendar(today.year, today.week, 1)
-        all_regist = Register.objects.filter(space=space, date__gte=week_firstDay).values("start_time", "space_id", "date", "user_id", "user_name", "user_phone", "user_dormnumber")
+        all_regist = Register.objects.filter(space=space, date__gte=week_firstDay).values("start_time", "space_id", "date", "user_id", "user_name", "user_phone", "user_dormnumber", "usable")
         all_regist = list(all_regist)
         int_to_date = ['一', '二', '三', '四', '五', '六', '日']
         for record in all_regist:
-            if request.user.is_authenticated != True:
+            if request.user.is_authenticated != True and record["usable"] == 1:
                 record['user_id'] = record['user_id'][:-5] + "XXXXX"
                 record['user_name'] = record['user_name'][0] + "X" + record['user_name'][2:]
                 record['user_phone'] = ""
             record['date'] = int_to_date[record['date'].weekday()]
-        print(all_regist)
         return JsonResponse(all_regist, safe=False)
     else:
         raise Http404("Page not exit")

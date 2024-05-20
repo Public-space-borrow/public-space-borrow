@@ -6,6 +6,7 @@ from public_borrow.models import BlackList
 import datetime
 from datetime import datetime
 from .forms import StudentID
+from django.db import connection
 @csrf_exempt
 def AdminModel_print(request):
     if request.user.is_authenticated and request.user.is_admin == True:
@@ -106,11 +107,20 @@ def stu_info(request):
     
 from .forms import reservation
 from public_borrow.models import Register, Space
+from .utility import dicfetchall
 def admin_reserve(request):
     if request.user.is_authenticated and request.user.is_admin:
         if request.method == "GET":
             today = datetime.now().date().strftime("%Y-%m-%d")
-            admin_record = Register.objects.filter(usable=0, data__gte=today)
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT Space.id, Space.region, Space.space_name, DATE_FORMAT(Register.date, "%Y-%m-%d") as date, MIN(Register.start_time) as s_time, MAX(Register.start_time) as e_time, MIN(Register.user_name) as reason
+                    FROM Register JOIN Space on Register.space_id = Space.id
+                    WHERE Register.usable = 0
+                    GROUP BY Space.id, Register.date, Register.user_name;
+                    """)
+                admin_record = dicfetchall(cursor)
+            print(admin_record)
             data = {
                 "spaces": list(Space.objects.all().values("id", "region", "space_name")),
                 "today" : today,
@@ -132,13 +142,16 @@ def admin_reserve(request):
                     reason = form.cleaned_data.get("reason")
                     reserve_date = form.cleaned_data.get("date")
                     while start_time <= end_time:
-                        sig = str(start_time) + str(space_id) + str(reserve_date).strftime("%Y-%m-%d")
-                        new_reserve = Register(space=space_id, date=reserve_date, signature=sig, usable=0, user_name=reason)
-                        new_reserve.save()
+                        sig = str(start_time) + str(space_id) + reserve_date.strftime("%Y-%m-%d")
+                        new_reserve = Register(space=Space.objects.get(id=space_id), date=reserve_date, signature=sig, usable=0, user_name=reason, start_time=start_time)
+                        if request.POST.get("delete"):
+                            new_reserve.delete()
+                        else:
+                            new_reserve.save()
                         start_time += 1
-                    redirect("admin_reserve")
+                    return redirect("admin_reserve")
                 else:
                     print(form)
                     raise Http404("form invalid")
     else:
-        redirect("home")
+        return redirect("home")

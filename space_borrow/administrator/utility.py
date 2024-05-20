@@ -102,3 +102,10 @@ def crawl_student(args):
     return uwsgi.SPOOL_OK
 
 uwsgi.spooler = crawl_student
+
+def dicfetchall(cursor):
+    colums = [col[0] for col in cursor.description]
+    return [
+        dict(zip(colums, row))
+        for row in cursor.fetchall()
+    ]

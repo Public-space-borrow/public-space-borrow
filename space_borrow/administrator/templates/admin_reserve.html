@@ -68,7 +68,7 @@
                         <form id="input_blacklist" action="" method = "post">
                             {% csrf_token %}
                             <td>
-                                <select id="region" name="region">
+                                <select id="region" name="region" required>
                                     <option disabled selected value> -------- </option>
                                     <option value="武嶺">武嶺</option>
                                     <option value="翠亨">翠亨</option>
@@ -76,29 +76,48 @@
                                 </select>
                             </td>
                             <td>
-                                <select id="space" name="space">
+                                <select id="space" name="space" required>
                                     <option disabled selected value> -------- </option>
                                 </select>
                             </td>
                             <td><input type="date" name="date" id="reserveDate" placeholder="預借日期" min="{{today}}" required disabled></td>
                             <td>
-                                <select id="startTime" name="startTime">
+                                <select id="startTime" name="startTime" required>
                                     <option disabled selected value> -------- </option>
                                 </select>
                             </td>
                             <td>
-                                <select name="endTime" id="hours">
+                                <select name="endTime" id="hours" required>
                                     <option disabled selected value> -------- </option>
                                 </select>
                             </td>
-                            <td><input type="text" name="reason" placeholder="預借事由"></td>
-                            <td><input type="submit" value="新增" id="add"></td>
+                            <td><input type="text" name="reason" placeholder="預借事由" required></td>
+                            <td><input type="submit" value="新增" id="add" required></td>
                         </form>
                     </tr>
                     {% for i in records %}
                     <tr>
                         <td>
-                            <span>{{ i.region }}</span>
+                            <span class="r_region">{{ i.region }}</span>
+                        </td>
+                        <td>
+                            <span class="r_space">{{ i.space_name }}</span>
+                            <span display:none>{{i.id}}</span>
+                        </td>
+                        <td>
+                            <span class="r_date">{{ i.date }}</span>
+                        </td>
+                        <td>
+                            <span class="r_s_time">{{ i.s_time }}</span>
+                        </td>
+                        <td>
+                            <span class="r_e_time">{{ i.e_time }}</span>
+                        </td>
+                        <td>
+                            <span class="r_reason">{{ i.reason }}</span>
+                        </td>
+                        <td>
+                            <button type="button" class="delete" id="delete" style="display: inline">刪除</button>
                         </td>
                     </tr>
                     {% endfor %}
