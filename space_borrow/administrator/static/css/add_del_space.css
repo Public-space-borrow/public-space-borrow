@@ -1,0 +1,140 @@
+.whole_contain {
+    width: 70%;
+    left: 25%;
+    position: relative;
+    top: 10vh;
+}
+
+.toggle-container {
+    text-align: center;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 300px;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.toggle-switch input[type="radio"] {
+    display: none;
+}
+
+.toggle-switch label {
+    flex: 1;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 33.33%;
+    height: 100%;
+    background-color: #795548;
+    border-radius: 5px;
+    transition: 0.3s;
+    z-index: 1;
+}
+
+#option1:checked ~ .toggle-slider {
+    left: 0;
+}
+
+#option2:checked ~ .toggle-slider {
+    left: 33.33%;
+}
+
+#option3:checked ~ .toggle-slider {
+    left: 66.66%;
+}
+
+.toggle-switch label {
+    color: black;
+    font-weight: bold;
+}
+
+#option1:checked ~ label[for="option1"],
+#option2:checked ~ label[for="option2"],
+#option3:checked ~ label[for="option3"] {
+    color: white;
+}
+
+
+
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 75%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+thead tr {
+    background-color: #795548;
+    color: #ffffff;
+    text-align: left;
+}
+th, td {
+    padding: 10px 14px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #ebe6e6;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid #a98842;
+}
+tbody tr.active-row {
+    font-weight: bold;
+    color: #a98842;
+}
+
+
+.each_space .edit {
+    background-color: #6a9de5;
+    color: #ffffff;
+    border: #6a9de5 solid;
+}
+
+.each_space .space_cancel {
+    background-color: #7b7c7d;
+    color: #ffffff;
+    border: #7b7c7d solid;
+}
+
+.each_space .save {
+    background-color: #c39e6b;
+    color: #ffffff;
+    border: #c39e6b solid;
+}
+
+
+.each_space .delete {
+    background-color: #ff5252;
+    color: #ffffff;
+    border: #ff5252 solid;
+}
+
+.editable input{
+    width: 90%;
+}
+
+#add{
+    background-color: #93bb65;
+    color: #ffffff;
+    border: #93bb65 solid;
+    width: auto !important;
+}

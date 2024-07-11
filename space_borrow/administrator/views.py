@@ -155,3 +155,45 @@ def admin_reserve(request):
                     raise Http404("form invalid")
     else:
         return redirect("home")
+    
+
+def add_del_space(request):
+    # if request.method == "GET":
+    space = Space.objects.all().values('space_name', 'region', 'id', 'eng_name').order_by('-space_name')
+
+    data = {
+        'space': space,
+    }
+        # print(space)
+    
+    # add/delete/edit
+    if request.method == "POST":
+        mode = request.POST.get("mode")
+
+        if mode == "space_name_edit":
+            # print(request.POST.get('eng_name'))
+            # print(request.POST.get('space_name'))
+            # print(request.POST.get('region'))
+            # print(request.POST.get('id'))
+
+            Space.objects.filter(id=request.POST.get('id')).update(eng_name=request.POST.get('eng_name'), space_name=request.POST.get('space_name'), region=request.POST.get('region'))
+
+            return HttpResponse('修改成功')
+        
+        elif mode == "add_space":
+            space_name = request.POST.get('space_name')
+            region = request.POST.get('region')
+            eng_name = request.POST.get('eng_name')
+
+            if not Space.objects.filter(space_name=space_name).exists() and not Space.objects.filter(eng_name=eng_name).exists():
+            
+                Add_space = Space(space_name=space_name, region=region, eng_name=eng_name)
+                Add_space.save()
+
+            # return redirect("add_del_space")
+        
+        else:
+            return HttpResponse('此動作失敗')
+    
+    return render(request, "add_del_space.html", data)    
+

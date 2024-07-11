@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% csrf_token %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宿舍公共空間借用系統</title>
+
+    <link href = '{% static "css/admin_bar.css" %}' rel="stylesheet">
+    <link href = '{% static "css/add_del_space.css" %}' rel="stylesheet">
+
+    <!--Jquery core import-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+    <script src='{% static "js/add_del_space.js" %}'></script>
+</head>
+<body>
+    {% include "admin_bar.html"%}
+
+    <div class="whole_contain">
+        <div class="toggle-container">
+            <div class="toggle-switch">
+                <input type="radio" id="option1" name="toggle" value="翠亨" checked>
+                <label for="option1">翠亨</label>
+    
+                <input type="radio" id="option2" name="toggle" value="雨樹">
+                <label for="option2">雨樹</label>
+    
+                <input type="radio" id="option3" name="toggle" value="武嶺">
+                <label for="option3">武嶺</label>
+    
+                <span class="toggle-slider"></span>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <th>中文名稱</th>
+                <th>英文名稱</th>
+                <th>功能</th>
+            </thead>
+
+            <tbody id="table-body">
+                <tr>
+                    <form id="input_space" action="{% url 'add_del_space' %}" method = "post">
+                        {% csrf_token %}
+
+                        <!-- 在後端識別此POST動作是新增一個space -->
+                        <td style="display: none;"><input type="hidden" name="mode" value="add_space"></td> 
+
+                        <td><input type="text" name="space_name" id="input_chi" placeholder="公共空間中文名" required></td>
+                        <td><input type="text" name="eng_name" id="input_eng" placeholder="公共空間英文名" required></td>
+                        <td><input type="submit" value="新增" id="add"></td>
+                        <td style="display:none"><input id="input_region" value='' name="region"></td>
+                    </form>
+                </tr>
+                {% for item in space %}            
+                <tr data-id="{{item.id}}" data-region="{{item.region}}" class="each_space">
+                    <td class="editable">
+                        <span>{{item.space_name}}</span>
+                        <input type="text" class="edit_chi" style="display: none;" value="{{item.space_name}}">
+                    </td>
+                    <td class="editable">
+                        <span>{{item.eng_name}}</span>
+                        <input type="text" class="edit_eng" style="display: none;" value="{{item.eng_name}}">
+                    </td>
+                    <td class="space_id" style="display: none;">{{item.id}}</td>
+                    <td>
+                        <button type="button" class="edit" style="display: inline">修改</button>
+                        <button type="button" class="save" style="display: none;">儲存</button>
+                        <button type="button" class="space_cancel" style="display: none;">取消</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+
+        </table>
+
+    </div>
+
+    
+</body>
+</html>
+
+<script>
+$(document).ready(function() {
+    $('#input_region').attr('value', '翠亨');
+
+    function filterTable(region) {
+        $('.each_space').each(function() {
+            var dataRegion = $(this).data('region');
+            // console.log('Data region:', dataRegion);  // Debugging line
+            if (dataRegion === region) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+
+    $('input[name="toggle"]').change(function() {
+        var initialRegion = $('input[name="toggle"]:checked').val();
+        // console.log('Initial region:', initialRegion); 
+        $('#input_region').attr('value', initialRegion);
+
+        var selectedRegion = $(this).val();
+        // console.log('Selected region on change:', selectedRegion);  // Debugging line
+        filterTable($(this).val());
+
+    });
+
+    // Initialize table with the first option
+    filterTable($('input[name="toggle"]:checked').val());
+
+
+
+    //edit space
+    $(".edit").on("click", function(event){
+        var $row = $(this).closest(".each_space");
+
+        $row.find(".edit").css("display", "none");
+        // $row.find(".hide").css("display", "none");
+        $row.find(".save").css("display", "inline");
+        $row.find(".space_cancel").css("display", "inline");
+
+
+        // var chinese = $(this).closest("tr").find("td:first").text().trim();
+        // var english = $(this).closest("tr").find("td:nth-child(2)").text().trim();
+        // var region = $(this).closest("tr").find("td:nth-child(4)").text().trim();   
+        // editable
+        // alert(chinese + english + region);
+
+
+    // 迭代所有可編輯的元素，隱藏 <span>，顯示相應的 <input>
+        $row.find(".editable span").each(function() {
+            $(this).css("display", "none");
+        });
+
+        $row.find(".editable input").each(function() {
+            $(this).css("display", "inline");
+        });
+
+        // $row.find(".edit_chi").val(chinese);
+        // $row.find(".edit_eng").val(english);
+
+        // alert(formattedExpireTime);
+    });
+
+    //取消按鈕之動作
+    $(".each_space .space_cancel").on("click", function(event){
+        var $row = $(this).closest(".each_space");
+
+        $row.find(".edit").css("display", "inline");
+        // $row.find(".hide").css("display", "inline");
+        $row.find(".save").css("display", "none");
+        $row.find(".space_cancel").css("display", "none");
+
+        $row.find(".editable span").each(function() {
+            $(this).css("display", "inline");
+        });
+
+        $row.find(".editable input").each(function() {
+            $(this).css("display", "none");
+        });
+    });
+
+
+    //save按鈕之行為
+    $(".save").on("click", function(event){
+        event.preventDefault();
+
+        var $row = $(this).closest(".each_space");
+
+        var chinese = $row.find(".edit_chi").val().trim();
+        var english = $row.find(".edit_eng").val().trim();
+        var region = $("#input_region").val().trim();   
+        var space_id = $row.find('.space_id').text();
+        // alert(region);
+
+        var exists = false;
+        $(".each_space").each(function() {
+            var dataRegion = $(this).data('region');
+            if(dataRegion === region){
+                var currentChi = $(this).find(".edit_chi").val().trim();
+                var currentEng = $(this).find(".edit_eng").val().trim();
+
+                if ($(this).data("id") !== $row.data("id")) {
+                    if (currentChi === chinese || currentEng === english) {
+                        exists = true;
+                        return false;  // 结束循环
+                    }
+                }
+            }
+
+        });
+
+        if (exists) {
+            alert("公共空間名稱或英文名稱不能重複！");
+            event.preventDefault();  // 阻止表单提交或 Ajax 请求发送
+            return;
+        }
+
+        $.ajax({
+            url: 'add_del_space',
+            type: 'POST', 
+            data: {
+                'space_name': chinese,
+                'eng_name': english,
+                'region': region,
+                'id': space_id,
+                'mode' : 'space_name_edit',
+            },
+            success: function(response){
+                alert(response);
+                location.reload(true);
+            },
+            error: function(response){
+                alert("修改失敗");
+                console.log(response);
+            }
+        });
+    });
+});
+</script>
+
+<style>
+</style>
